@@ -3,5 +3,5 @@
 export default function MarketplacePage() {
     // <div> is a placeholder for text, will be replaced later
     // what will be displayed on screen
-    <div>Marketplace Page</div>
+    return <div>Marketplace Page</div>
 }
