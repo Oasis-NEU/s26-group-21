@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom"
+import "./ListingDetailPage.css"
 
 // creating React component (reusable piece of UI)
 // export makes it available to be imported by other files
@@ -10,7 +11,8 @@ export default function ListingDetailPage() {
     const BackButton = () => {
         let navigate = useNavigate();
         return (
-            <button onClick={() => navigate("/marketplace")}>
+                <button className="back-button" 
+                onClick={() => navigate("/marketplace")}>
                 Return to Marketplace
             </button>
         )
@@ -23,8 +25,9 @@ export default function ListingDetailPage() {
 
             {/* image of textbook */}
             <div>
-                <img src="https://picsum.photos/200" // placeholder image
-                alt="Image of seller's textbook" // description of image
+                {/* placeholder image and description */}
+                <img src="https://picsum.photos/200"
+                alt="Image of seller's textbook"
                 />
             </div>
 
@@ -53,7 +56,9 @@ export default function ListingDetailPage() {
                 <h2>Contact Information</h2>
                 <p>info.</p>
             </div>
-            <BackButton />
+            <div className="button-container">
+                <BackButton/>
+            </div>
         </div>
     )
 }
