@@ -24,7 +24,7 @@ export default function ListingDetailPage() {
             <h1>Listing Information</h1>
 
             {/* image of textbook */}
-            <div>
+            <div className = "heading">
                 {/* placeholder image and description */}
                 <img src="https://picsum.photos/200"
                 alt="Image of seller's textbook"

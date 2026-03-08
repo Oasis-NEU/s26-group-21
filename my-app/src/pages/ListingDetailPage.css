@@ -1,3 +1,8 @@
+.heading {
+  align-items: left;
+  justify-content: left;
+}
+
 .button-container {
   display: flex;
   align-items: center;
