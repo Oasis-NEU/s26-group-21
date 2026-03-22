@@ -36,6 +36,11 @@ export default function ListingDetailPage() {
                 <h2>Name of Textbook</h2>
                 <p>textbook</p>
             </div>
+            {/* author(s) of textbook */}
+            <div>
+                <h2>Author(s)</h2>
+                <p>author</p>
+            </div>
             {/* textbook isbn number */}
             <div>
                 <h2>ISBN Number</h2>
