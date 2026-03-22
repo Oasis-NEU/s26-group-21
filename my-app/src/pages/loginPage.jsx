@@ -2,6 +2,7 @@
 // export makes it available to be imported by other files
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import logo from "../assets/NU_RGB_seal_R.png"
 export default function LoginPage() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -28,6 +29,7 @@ export default function LoginPage() {
 return (
     <div style={styles.page}>
         <div style={styles.card}>
+            <img src={logo} alt="Northeastern University Logo" style={styles.logo} />
             <h2 style={styles.title}>Northeastern Marketplace</h2>
 
             {error && <p style={styles.error}>{error}</p>}
@@ -75,11 +77,12 @@ const styles = {
     },
     card: {
         backgroundColor: "#2a2a2a",
-        padding: "40px",
+        padding: "60px",
         borderRadius: "12px",
         width: "100%",
-        maxWidth: "400px",
+        maxWidth: "480px",
         borderTop: "4px solid #cc0000",
+        boxShadow: "0 0 30px rgba(204, 0, 0, 0.3)",
     },
     title: {
         color: "#cc0000",
@@ -89,13 +92,15 @@ const styles = {
     subtitle: {
         color: "#aaaaaa",
         textAlign: "center",
-        marginBottom: "24px",
-        fontSize: "14px",
+        marginBottom: "20px",
+        fontSize: "28px",
+        fontFamily: "Georgia, serif",
+        letterSpacing: "1px",
     },
     form: {
         display: "flex",
         flexDirection: "column",
-        gap: "14px",
+        gap: "20px",
     },
     input: {
         padding: "12px",
@@ -104,6 +109,7 @@ const styles = {
         backgroundColor: "#1a1a1a",
         color: "white",
         fontSize: "14px",
+        outline: "none",
     },
     checkboxRow: {
         display: "flex",
@@ -135,5 +141,23 @@ const styles = {
         borderRadius: "8px",
         fontSize: "14px",
         textAlign: "center",
+    },
+
+    logo: {
+        width: "120px",
+        height: "120px",
+        objectFit: "contain",
+        display: "block",
+        margin: "0 auto 16px auto",
+    },
+    signupText: {
+        color: "#aaaaaa",
+        textAlign: "center",
+        fontSize: "14px",
+        margin: "0",
+    },
+    signupLink: {
+        color: "#cc0000",
+        textDecoration: "none",
     },
 }
