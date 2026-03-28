@@ -1,7 +1,10 @@
+'''Using API endpoints to update textbook listings from database.'''
+
 import os
 from dotenv import load_dotenv
 from supabase import create_client
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 load_dotenv() # loading variables from .env
@@ -12,18 +15,31 @@ supabase = create_client(str(DB_URL), str(DB_KEY))
 
 app = FastAPI()
 
-# custom types from Pydantic to be used in POST
+origins = [
+    "http://localhost:5173"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins = origins,
+    allow_credentials = True,
+    allow_methods = ['*'],
+    allow_headers = ['*'],
+)
+
 class Textbook(BaseModel):
+    '''custom types from Pydantic to be used in POST'''
     title: str
     authors: str
     isbn: int
     description: str | None = None
     price: float
     contact_info: str
+    image_url: str
 
-# get all listings from database
 @app.get("/listings")
 async def get_listings():
+    '''get all listings from database'''
     response = (
         supabase.table("textbook_listings")
         .select("*") # selecting all textbook listings
@@ -31,9 +47,14 @@ async def get_listings():
         )
     return response.data
 
-# get specific listing from database using a textbook id
 @app.get('/listings/{textbook_id}')
 async def get_specific_listing(textbook_id: str):
+    '''
+    get specific listing from database using a textbook id
+    
+    Params:
+    textbook_id (str): id of textbook to be found from database
+    '''
     response = (
         supabase.table("textbook_listings")
         .select("*")
@@ -42,9 +63,14 @@ async def get_specific_listing(textbook_id: str):
     )
     return response.data
 
-# delete a listing from database using a textbook id
 @app.delete('/listings/{textbook_id}')
 async def delete_specific_listing(textbook_id: str):
+    '''
+    delete a listing from database using a textbook id
+    
+    Params:
+    textbook_id (str): id of textbook to be deleted from database
+    '''
     response = (
         supabase.table("textbook_listings")
         .delete()
@@ -53,9 +79,16 @@ async def delete_specific_listing(textbook_id: str):
     )
     return response.data
 
-# adding a listing to database
 @app.post('/listings')
 async def add_listing(textbook: Textbook):
+    '''
+    
+    adding a listing to database
+    
+    Params:
+    textbook (Textbook): instance of Textbook to be posted to
+    database
+    '''
     response = (
         supabase.table("textbook_listings")
         .insert(
@@ -65,7 +98,8 @@ async def add_listing(textbook: Textbook):
                 "isbn": textbook.isbn,
                 "description": textbook.description,
                 "price": textbook.price,
-                "contact_info": textbook.contact_info
+                "contact_info": textbook.contact_info,
+                "image_url": textbook.image_url
             }
         )
         .execute()

@@ -15,7 +15,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LoginPage />} /> {/* root path, first thing user will see */}
         <Route path="/marketplace" element={<MarketplacePage />} />
-        <Route path="/listing-details" element={<ListingDetailPage />} />
+        <Route path="/listing-details/:textbook_id" element={<ListingDetailPage />} />
         <Route path="/add-listing" element={<AddListingPage />} />
       </Routes>
     </>
