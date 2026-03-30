@@ -1,0 +1,212 @@
+.login-page {
+    min-height: 100vh;
+    background-color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: "Avenir", "Avenir Next", "Nunito", sans-serif;
+}
+
+.login-brand {
+    font-family: "Leitura News", "Leitura", Georgia, serif;
+    font-size: 80px;
+    font-weight: normal;
+    color: #e03535;
+    margin: 0 0 6px 0;
+    letter-spacing: 0.5px;
+}
+
+.login-brand-look {
+    font-weight: bold;
+    font-style: italic;
+}
+
+.login-logo-placeholder {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 10px;
+}
+
+.login-subtitle {
+    font-family: "Avenir", "Avenir Next", "Nunito", sans-serif;
+    font-size: 20px;
+    color: #e03535;
+    text-align: center;
+    margin: 0 0 32px 0;
+    letter-spacing: 0.2px;
+}
+
+.login-tagline {
+    font-family: "Avenir", "Avenir Next", "Nunito", sans-serif;
+    font-size: 13px;
+    color: #999;
+    text-align: center;
+    margin: 0 0 14px 0;
+    letter-spacing: 0.4px;
+}
+
+.login-card {
+    background-color: #ffffff;
+    padding: 48px 52px;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 460px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    border-top: 5px solid #cc0000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-logo {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+    margin-bottom: 12px;
+}
+
+.login-title {
+    color: #cc0000;
+    font-size: 22px;
+    font-weight: 700;
+    text-align: center;
+    margin: 0 0 24px 0;
+}
+
+/* Sign In / Sign Up tabs */
+.login-tabs {
+    position: relative;
+    display: flex;
+    width: 100%;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    padding: 4px;
+    margin-bottom: 24px;
+    gap: 4px;
+}
+
+.tab-slider {
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: 4px;
+    width: calc(50% - 6px);
+    background-color: #cc0000;
+    border-radius: 8px;
+    transform: translateX(calc(var(--tab-offset) * (100% + 8px)));
+    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 10px 0;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: "Avenir", "Avenir Next", "Nunito", sans-serif;
+    cursor: pointer;
+    background: transparent;
+    color: #888;
+    position: relative;
+    transition: color 0.28s;
+}
+
+.tab-btn.active {
+    color: #ffffff;
+}
+
+.tab-btn:not(.active):hover {
+    color: #333;
+}
+
+/* Form */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+
+.login-input {
+    padding: 13px 14px;
+    border-radius: 10px;
+    border: 1.5px solid #ddd;
+    background-color: #fafafa;
+    color: #222;
+    font-size: 14px;
+    font-family: "Avenir", "Avenir Next", "Nunito", sans-serif;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.login-input:focus {
+    border-color: #cc0000;
+    background-color: #fff;
+}
+
+.login-forgot {
+    color: #cc0000;
+    font-size: 13px;
+    text-decoration: none;
+    text-align: right;
+    margin-top: -8px;
+}
+
+.login-forgot:hover {
+    text-decoration: underline;
+}
+
+.login-btn {
+    padding: 13px;
+    background-color: #cc0000;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: "Avenir", "Avenir Next", "Nunito", sans-serif;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 4px;
+}
+
+.login-btn:hover {
+    background-color: #aa0000;
+}
+
+/* Error */
+.login-error {
+    color: #cc0000;
+    background-color: #fdecea;
+    border: 1px solid #f5c6c6;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 4px;
+}
+
+/* Switch mode text */
+.login-switch {
+    color: #888;
+    font-size: 13px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.login-switch-link {
+    color: #cc0000;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.login-switch-link:hover {
+    text-decoration: underline;
+}

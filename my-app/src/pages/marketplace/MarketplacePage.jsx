@@ -1,6 +1,39 @@
 import { useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { categories, marketplaceItems } from './marketplaceData'
 import './marketplace.css'
+
+function Navbar() {
+  const navigate = useNavigate()
+
+  return (
+    <nav className="navbar">
+      <div className="navbar-left">
+        <div className="navbar-logo-placeholder" />
+        <span className="navbar-brand">
+          Text<span className="navbar-brand-look">Look</span>
+        </span>
+      </div>
+      <div className="navbar-right">
+        <button className="navbar-icon-btn" title="Settings">
+          {/* placeholder: replace with settings icon image */}
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="12" r="3" />
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+          </svg>
+        </button>
+        <button className="navbar-icon-btn" title="Log out" onClick={() => navigate('/')}>
+          {/* placeholder: replace with logout/door icon image */}
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+        </button>
+      </div>
+    </nav>
+  )
+}
 
 const sortOptions = [
   { value: 'relevance', label: 'Relevance' },
@@ -67,7 +100,7 @@ function FiltersBar({
 
 function ListingCard({ item, onViewDetails }) {
   return (
-    <article className="listingCard">
+    <article className="listingCard" onClick={() => onViewDetails(item)}>
       <div className="listingCard-imageWrapper">
         <img src={item.thumbnailUrl} alt={item.title} />
       </div>
@@ -77,17 +110,9 @@ function ListingCard({ item, onViewDetails }) {
         <p className="listingCard-description">{item.shortDescription}</p>
         <div className="listingCard-meta">
           <span className="listingCard-price">${item.price.toFixed(2)}</span>
-          <span className="listingCard-rating">★ {item.rating.toFixed(1)}</span>
         </div>
         <div className="listingCard-footer">
           <span className="listingCard-location">{item.location}</span>
-          <button
-            type="button"
-            className="listingCard-cta"
-            onClick={() => onViewDetails(item)}
-          >
-            View details
-          </button>
         </div>
       </div>
     </article>
@@ -125,41 +150,42 @@ function DetailsOverlay({ item, onClose }) {
   return (
     <div className="detailsOverlay">
       <div className="detailsOverlay-backdrop" onClick={onClose} />
-      <aside className="detailsOverlay-panel" aria-label="Textbook details">
-        <button
-          type="button"
-          className="detailsOverlay-close"
-          onClick={onClose}
-        >
-          ×
-        </button>
+      <div className="detailsOverlay-modal" aria-label="Textbook details">
+        <button type="button" className="detailsOverlay-close" onClick={onClose}>×</button>
+
         <div className="detailsOverlay-imageWrapper">
           <img src={item.thumbnailUrl} alt={item.title} />
         </div>
+
         <div className="detailsOverlay-body">
           <span className="detailsOverlay-category">{item.category}</span>
           <h2 className="detailsOverlay-title">{item.title}</h2>
-          <p className="detailsOverlay-location">{item.location}</p>
-          <div className="detailsOverlay-meta">
-            <span className="detailsOverlay-price">
-              ${item.price.toFixed(2)}
-            </span>
-            <span className="detailsOverlay-rating">
-              ★ {item.rating.toFixed(1)}
-            </span>
+          <p className="detailsOverlay-isbn">ISBN: {item.isbn}</p>
+
+          <div className="detailsOverlay-row">
+            <span className="detailsOverlay-label">Price</span>
+            <span className="detailsOverlay-value">${item.price.toFixed(2)}</span>
           </div>
+
+          <div className="detailsOverlay-row">
+            <span className="detailsOverlay-label">Location</span>
+            <span className="detailsOverlay-value">{item.location}</span>
+          </div>
+
+          <div className="detailsOverlay-row">
+            <span className="detailsOverlay-label">Copies available</span>
+            <span className="detailsOverlay-value">{item.quantity}</span>
+          </div>
+
           <p className="detailsOverlay-description">{item.shortDescription}</p>
-          <div className="detailsOverlay-quantity">
-            <span className="detailsOverlay-quantity-label">Copies left</span>
-            <span className="detailsOverlay-quantity-value">
-              {item.quantity}
-            </span>
-          </div>
+
+          {/* additional info can be added here */}
+
           <a href={mailtoHref} className="detailsOverlay-primary">
             Contact seller
           </a>
         </div>
-      </aside>
+      </div>
     </div>
   )
 }
@@ -197,13 +223,12 @@ function MarketplacePage() {
 
   return (
     <>
+      <Navbar />
       <main className="marketplace">
         <section className="marketplace-hero">
-          <p className="marketplace-eyebrow">Northeastern textbook exchange</p>
-          <h1>Campus Textbook Marketplace</h1>
+          <h1>The Marketplace</h1>
           <p className="marketplace-subtitle">
-            Buy and sell course textbooks directly with other Huskies. Search by
-            title, course, or subject to find what you need for the semester.
+            Buy and sell course textbooks directly with other Huskies.
           </p>
         </section>
 
@@ -227,6 +252,7 @@ function MarketplacePage() {
         </section>
       </main>
       <DetailsOverlay item={selectedItem} onClose={() => setSelectedItem(null)} />
+      <button className="fab-add" title="Add listing" onClick={() => navigate('/add-listing')}>+</button>
     </>
   )
 }

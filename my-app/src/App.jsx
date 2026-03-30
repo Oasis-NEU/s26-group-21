@@ -1,22 +1,21 @@
 import './App.css'
-import MarketplacePage from './MarketplacePage.jsx'
+import LoginPage from './pages/login/loginPage'
+import ForgotPasswordPage from './pages/login/forgotPassword/forgotPassword'
+import MarketplacePage from './pages/marketplace/MarketplacePage'
+import ListingDetailPage from './pages/ListingDetailPage'
+import AddListingPage from './pages/AddListingPage'
+import { Routes, Route } from 'react-router-dom'
 
 function App() {
   return (
     <>
-    <div className="app-shell">
-      <header className="app-header">
-        <span className="app-logo-dot" />
-        <span className="app-title">Northeastern Marketplace</span>
-      </header>
-      <MarketplacePage />
-    </div>
-    {/* defining the routes that map URL paths to corresponding page components */}
+        {/* defining the routes that map URL paths to corresponding page components */}
       <Routes>
         <Route path="/" element={<LoginPage />} /> {/* root path, first thing user will see */}
         <Route path="/marketplace" element={<MarketplacePage />} />
         <Route path="/listing-details" element={<ListingDetailPage />} />
         <Route path="/add-listing" element={<AddListingPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       </Routes>
     </>
   )
