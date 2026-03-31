@@ -1,0 +1,82 @@
+/* Global font override for navbar */
+.navbar,
+.navbar-icon-btn {
+    font-family: "Avenir", "Avenir Next", "Nunito", sans-serif;
+}
+
+/* Navbar */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  background-color: #e03535;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  height: 64px;
+  box-sizing: border-box;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.navbar-logo-placeholder {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  background-color: rgba(255, 255, 255, 0.2);
+  flex-shrink: 0;
+}
+
+.navbar-brand {
+  font-family: "Leitura News", "Leitura", Georgia, serif;
+  font-size: 28px;
+  color: #ffffff;
+  font-weight: normal;
+  letter-spacing: 0.5px;
+  padding: 4px;
+  border-radius: 6px;
+  transition: background-color 0.18s;
+}
+
+.navbar-brand-look {
+  font-weight: bold;
+  font-style: italic;
+}
+
+.navbar-brand:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.navbar-icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #ffffff;
+  padding: 8px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.18s;
+}
+
+.navbar-icon-btn svg {
+  width: 22px;
+  height: 22px;
+}
+
+.navbar-icon-btn:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}

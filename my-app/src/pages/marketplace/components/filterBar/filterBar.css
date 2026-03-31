@@ -1,0 +1,109 @@
+.filterBar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0.9rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid #e2e8f0;
+  background-color: #f8fafc;
+}
+
+.filterBar-main {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.filterBar-search {
+  flex: 1 1 220px;
+}
+
+.filterBar-search input {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid #cbd5f5;
+  font-size: 0.95rem;
+  font-family: "Avenir", "Avenir Next", "Nunito", sans-serif;
+  background: #f9fafb;
+  transition: border-color 0.6s ease, box-shadow 0.6s ease;
+}
+
+.filterBar-search input:hover {
+  border-color: #e03535;
+  box-shadow: 0 0 0 1px #e03535;
+}
+
+.filterBar-search input:focus {
+  outline: none;
+  border-color: #e03535;
+  box-shadow: 0 0 0 1px #e03535;
+}
+
+.filterBar-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.filterBar-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.filterBar-chip {
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-size: 0.8rem;
+  font-family: "Avenir", "Avenir Next", "Nunito", sans-serif;
+  background-color: #e5e7eb;
+  color: #374151;
+  cursor: pointer;
+  transition: background-color 140ms ease, color 140ms ease,
+    border-color 0.6s ease, box-shadow 0.6s ease, transform 140ms ease;
+}
+
+.filterBar-chip:hover {
+  background-color: #d1d5db;
+  border-color: #e03535;
+  box-shadow: 0 0 0 1px #e03535;
+}
+
+.filterBar-chip--active {
+  background-color: #e03535;
+  color: #f9fafb;
+  border-color: #e03535;
+  transform: translateY(-1px);
+}
+
+.filterBar-sort {
+  min-width: 160px;
+  padding: 0.45rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid #cbd5f5;
+  font-size: 0.85rem;
+  font-family: "Avenir", "Avenir Next", "Nunito", sans-serif;
+  background-color: #ffffff;
+  transition: border-color 0.6s ease, box-shadow 0.6s ease;
+}
+
+.filterBar-sort:hover {
+  border-color: #e03535;
+  box-shadow: 0 0 0 1px #e03535;
+}
+
+.filterBar-meta {
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+@media (max-width: 640px) {
+  .filterBar {
+    padding: 0.75rem 0.85rem;
+  }
+}

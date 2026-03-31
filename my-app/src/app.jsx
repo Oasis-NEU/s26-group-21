@@ -1,9 +1,12 @@
-import './App.css'
+/**
+ * @fileoverview Defining client-side routes and maps URL paths to corresponding
+ * page components (Login, Marketplace, ForgotPassword, Settings)
+ */
+
 import LoginPage from './pages/login/loginPage'
 import ForgotPasswordPage from './pages/login/forgotPassword/forgotPassword'
-import MarketplacePage from './pages/marketplace/MarketplacePage'
-import ListingDetailPage from './pages/ListingDetailPage'
-import AddListingPage from './pages/AddListingPage'
+import MarketplacePage from './pages/marketplace/marketplacePage'
+import Settings from './pages/settings/settings'
 import { Routes, Route } from 'react-router-dom'
 
 function App() {
@@ -13,9 +16,8 @@ function App() {
       <Routes>
         <Route path="/" element={<LoginPage />} /> {/* root path, first thing user will see */}
         <Route path="/marketplace" element={<MarketplacePage />} />
-        <Route path="/listing-details" element={<ListingDetailPage />} />
-        <Route path="/add-listing" element={<AddListingPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/settings" element={<Settings />} />
       </Routes>
     </>
   )
