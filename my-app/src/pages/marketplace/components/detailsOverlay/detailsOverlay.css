@@ -1,0 +1,189 @@
+.detailsOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.detailsOverlay-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.5);
+}
+
+.detailsOverlay-modal {
+  position: relative;
+  z-index: 1;
+  background: #ffffff;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 680px;
+  max-height: 88vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.25);
+  font-family: "Avenir", "Avenir Next", "Nunito", sans-serif;
+}
+
+.detailsOverlay-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 1rem;
+  border: none;
+  background: #e03535;
+  color: #ffffff;
+  font-size: 1.4rem;
+  line-height: 1;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.detailsOverlay-close:hover {
+  background-color: #c02020;
+  transform: scale(1.08);
+}
+
+.detailsOverlay-imageWrapper {
+  width: 100%;
+  padding-top: 45%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px 16px 0 0;
+}
+
+.detailsOverlay-imageWrapper img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.detailsOverlay-body {
+  padding: 1.5rem 1.75rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.detailsOverlay-category {
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  background-color: #ffd6d6;
+  color: #e03535;
+  font-size: 0.72rem;
+  font-weight: 600;
+  font-family: "Avenir", "Avenir Next", "Nunito", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.detailsOverlay-titleRow {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+}
+
+.detailsOverlay-title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: "Avenir", "Avenir Next", "Nunito", sans-serif;
+  color: #0f172a;
+}
+
+.detailsOverlay-isbn {
+  margin: -0.5rem 0 0;
+  font-size: 0.7rem;
+  color: #9ca3af;
+  font-family: "Avenir", "Avenir Next", "Nunito", sans-serif;
+}
+
+.detailsOverlay-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: baseline;
+  font-size: 0.9rem;
+}
+
+.detailsOverlay-label {
+  font-weight: 600;
+  color: #374151;
+  min-width: 120px;
+}
+
+.detailsOverlay-value {
+  color: #4b5563;
+}
+
+.detailsOverlay-description {
+  margin: 0.25rem 0 0;
+  font-size: 0.92rem;
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+.detailsOverlay-primary {
+  margin-top: 0.5rem;
+  margin-left: -0.18rem;
+  padding: 0.6rem 1.4rem;
+  border-radius: 999px;
+  border: none;
+  background-color: #e03535;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: "Avenir", "Avenir Next", "Nunito", sans-serif;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.listingCard-star {
+  position: absolute;
+  bottom: 0.90rem;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #cbd5e1;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  transition: color 160ms ease, transform 160ms ease;
+}
+
+.detailsOverlay-titleRow .listingCard-star {
+  position: static;
+  flex-shrink: 0;
+}
+
+.listingCard-star svg {
+  width: 18px;
+  height: 18px;
+}
+
+.listingCard-star:hover {
+  color: #f59e0b;
+  transform: scale(1.15);
+}
+
+.listingCard-star--active {
+  color: #f59e0b;
+}
+
+.detailsOverlay-primary:hover {
+  background-color: #c02020;
+  color: #ffffff;
+  text-decoration: none;
+}

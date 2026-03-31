@@ -1,10 +1,17 @@
+/*
+* File Name: index.css
+* Description: Establishes the foundational styles throughout the app
+*/
+
+
 :root {
+  /* Every text element inherits from MacOS's native font unless overriden */ 
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
     sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color: #0f172a;
-  background-color: #f3f4f6;
+  color: #0f172a; /* Text color when no other text color is set */
+  background-color: #f3f4f6; /* Behind every page when no other background is set */
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -14,9 +21,11 @@
 *,
 *::before,
 *::after {
+  /* Boxes stay fixed, and content shrinks inwards to make room for padding/borders */
   box-sizing: border-box;
 }
 
+/* Resetting margins so no whitespace around app */
 html,
 body {
   margin: 0;
@@ -33,16 +42,19 @@ body {
   min-height: 100vh;
 }
 
+/* Every <a> tag in the app is indigo */
 a {
   font-weight: 500;
   color: #4f46e5;
   text-decoration: none;
 }
 
+/* <a> tagged items turn slightly darker on hover */
 a:hover {
   color: #4338ca;
 }
 
+/* Buttons inherit font-family from :root */
 button {
   font-family: inherit;
 }

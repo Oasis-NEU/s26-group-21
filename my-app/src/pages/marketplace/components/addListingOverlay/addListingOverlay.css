@@ -1,0 +1,216 @@
+.addListingOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.addListingOverlay-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.5);
+}
+
+.addListingOverlay-modal {
+  position: relative;
+  z-index: 1;
+  background: #ffffff;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 560px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.25);
+  padding: 2rem;
+  font-family: "Avenir", "Avenir Next", "Nunito", sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.addListingOverlay-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 1rem;
+  border: none;
+  background: #e03535;
+  color: #ffffff;
+  font-size: 1.4rem;
+  line-height: 1;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.addListingOverlay-close:hover {
+  background-color: #c02020;
+  transform: scale(1.08);
+}
+
+.addListingOverlay-heading {
+  margin: 0 0 0.25rem;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* Drop zone */
+.addListingOverlay-dropzone {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  border: 2px dashed #cbd5e1;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+  background: #f8fafc;
+  overflow: hidden;
+}
+
+.addListingOverlay-dropzone:hover,
+.addListingOverlay-dropzone--active {
+  border-color: #e03535;
+  background: #fff5f5;
+}
+
+.addListingOverlay-dropzone--filled {
+  border-style: solid;
+  border-color: #e03535;
+}
+
+.addListingOverlay-dropHint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  color: #94a3b8;
+  font-size: 0.88rem;
+  text-align: center;
+  padding: 0 1.5rem;
+}
+
+.addListingOverlay-dropHint svg {
+  width: 40px;
+  height: 40px;
+  color: #cbd5e1;
+}
+
+.addListingOverlay-dropHint strong {
+  color: #e03535;
+}
+
+.addListingOverlay-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.addListingOverlay-removeImg {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.6rem;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(15, 23, 42, 0.65);
+  color: #fff;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+
+.addListingOverlay-removeImg:hover {
+  background: #e03535;
+}
+
+/* Form fields */
+.addListingOverlay-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.addListingOverlay-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.addListingOverlay-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.addListingOverlay-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.addListingOverlay-field label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.addListingOverlay-optional {
+  font-weight: 400;
+  color: #9ca3af;
+}
+
+.addListingOverlay-field input,
+.addListingOverlay-field textarea {
+  padding: 0.55rem 0.8rem;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-family: "Avenir", "Avenir Next", "Nunito", sans-serif;
+  color: #0f172a;
+  background: #f8fafc;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  resize: none;
+  overflow-y: auto;
+}
+
+.addListingOverlay-field input:focus,
+.addListingOverlay-field textarea:focus {
+  outline: none;
+  border-color: #e03535;
+  box-shadow: 0 0 0 3px rgba(224, 53, 53, 0.12);
+  background: #fff;
+}
+
+/* Submit */
+.addListingOverlay-submit {
+  padding: 0.65rem 1.5rem;
+  border: none;
+  border-radius: 999px;
+  background: #e03535;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: "Avenir", "Avenir Next", "Nunito", sans-serif;
+  cursor: pointer;
+  align-self: flex-end;
+  transition: background-color 0.2s;
+}
+
+.addListingOverlay-submit:hover {
+  background-color: #c02020;
+}

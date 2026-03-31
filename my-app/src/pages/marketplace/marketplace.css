@@ -1,0 +1,45 @@
+.marketplace {
+  width: 100%;
+  margin: 0;
+  padding: 2.5rem 2.5rem 3rem;
+  background:
+    radial-gradient(circle at top left, rgba(185, 28, 28, 0.08), transparent),
+    linear-gradient(to bottom, #f9fafb, #e5e7eb);
+  font-family: "Avenir", "Avenir Next", "Nunito", sans-serif;
+}
+
+.marketplace-hero {
+  text-align: left;
+  margin-bottom: 1.5rem;
+}
+
+.marketplace-hero h1 {
+  font-size: 2.25rem;
+  line-height: 1.1;
+  margin: 0 0 0.75rem;
+}
+
+.marketplace-hero-look {
+  font-style: italic;
+}
+
+.marketplace-subtitle {
+  max-width: 40rem;
+  color: #475569;
+  font-size: 0.98rem;
+  padding-left: 0.3rem;
+}
+
+.marketplace-controls {
+  margin-bottom: 1.25rem;
+}
+
+.marketplace-content {
+  margin-top: 0.75rem;
+}
+
+@media (max-width: 640px) {
+  .marketplace {
+    padding: 1.5rem 1rem 2.5rem;
+  }
+}
