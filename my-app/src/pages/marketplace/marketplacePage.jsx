@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import { categories, marketplaceItems } from './marketplaceData'
 
 // Importing components to be used on marketplace
@@ -12,13 +12,20 @@ import AddListingOverlay from './components/addListingOverlay/addListingOverlay.
 
 import './marketplace.css'
 
-function MarketplacePage() {
+function MarketplacePage({ session }) {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [sortOption, setSortOption] = useState('relevance')
   const [selectedItem, setSelectedItem] = useState(null)
   const [activeView, setActiveView] = useState('all')
   const [showAddListing, setShowAddListing] = useState(false)
+  const [firstName, setFirstName] = useState('')
+
+  useEffect(() => {
+    fetch(`http://localhost:8000/users/${session.user.id}`)
+    .then(res => res.json())
+    .then(data => setFirstName(data[0].first_name))
+  }, [])
 
   const filteredItems = useMemo(() => {
     let items = marketplaceItems
@@ -50,7 +57,7 @@ function MarketplacePage() {
       <Navbar />
       <main className="marketplace">
         <section className="marketplace-hero">
-          <h1>Welcome to the Marketplace, <span className="marketplace-hero-look">First Name</span></h1>
+          <h1>Welcome to the Marketplace, <span className="marketplace-hero-look">{firstName}</span></h1>
           <p className="marketplace-subtitle">
             Buy and sell course textbooks directly with other Huskies.
           </p>

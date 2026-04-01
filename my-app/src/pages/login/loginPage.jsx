@@ -6,6 +6,7 @@
 
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { supabase } from '../../supabase'
 import "./login.css"
 
 export default function LoginPage() {
@@ -14,14 +15,17 @@ export default function LoginPage() {
     // Setting password and password confirmation as empty strings
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
+    const [showPassword, setShowPassword] = useState(false) // If user wants to see password while they type
+
     const [firstName, setFirstName] = useState("") // Setting first name to empty string
     const [lastName, setLastName] = useState("") // Setting last name to empty string
+
     const [error, setError] = useState("") // Setting error for signing in to empty string
 
     const navigate = useNavigate() // How different components will result in navigating app
 
     // Handling the submission of email and password
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault() // Preventing full browser reload to allow for own logic
         setError("") // Clearing previous errors
 
@@ -52,8 +56,45 @@ export default function LoginPage() {
                 setError("Passwords do not match.")
                 return
             }
-        }
+            // Determining if user was succesfully added to supabase
+            const { data, error } = await supabase.auth.signUp({ email, password })
 
+            // Error checking from supabase
+            if (error) {
+                setError(error.message)
+                return
+            }
+
+            try {
+                // POST to API as JSON
+                const response = await fetch("http://localhost:8000/users", {
+                    method: "POST",
+                    headers: {"Content-Type" : "application/json"},
+                    body: JSON.stringify({
+                        user_id : data.user.id,
+                        first_name : firstName,
+                        last_name : lastName
+                    })
+                })
+                // response.ok is true if server returns 200 success code
+                if (!response.ok) {
+                    setError("Failed to create user profile.")
+                    return
+                }
+            } catch {
+                // If fetch fails entirely due to no response from backend
+                setError("Network error. Please check you connetion and try again.")
+                return
+            }
+        }
+        else {
+            const { error } = await supabase.auth.signInWithPassword({ email, password })
+
+            if (error) {
+                setError(error.message + ".")
+                return
+            }
+        }
         navigate("/marketplace") // Navgating to marketplace once there are no errors
     }
 
@@ -130,16 +171,22 @@ export default function LoginPage() {
                         className="login-input"
                     />
                     <input
-                        type="password" // Masks characters when typing
+                        type={showPassword ? "text" : "password"} // Masks characters when typing
                         placeholder="Password"
                         value={password} // Binds input's value to password state variable
                         onChange={(e) => setPassword(e.target.value)} // Updates state variable on every keystroke
                         className="login-input"
                     />
+                    <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                    >
+                        {showPassword ? "Hide" : "Show"}
+                    </button>
                     {/* Renders confirmation of password on sign up */}
                     {isSignUp && (
                         <input
-                            type="password" // Masks characters when typing
+                            type={showPassword ? "text" : "password"} // Masks characters when typing
                             placeholder="Confirm Password"
                             value={confirmPassword} // Binds input's value to confirmPassword state variable
                             onChange={(e) => setConfirmPassword(e.target.value)} // Update state variable on every keystroke
