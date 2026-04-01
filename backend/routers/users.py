@@ -2,8 +2,8 @@
 routers/users.py
 ----------------
 All API endpoints related to users.
-This is a placeholder for now — user endpoints will be built out
-when we implement authentication in Step 2.
+This file is "plugged in" to main.py using app.include_router().
+The prefix "/users" is set in main.py, so we don't repeat it here
 '''
 
 from fastapi import APIRouter
@@ -17,8 +17,7 @@ router = APIRouter()
 @router.get("/")
 async def get_users():
     '''
-    Placeholder: fetch all user profiles from the database.
-    Will be updated to require authentication before returning real data.
+    Fetch all users from the database.
     '''
     response = (
         supabase.table("users")
@@ -30,7 +29,7 @@ async def get_users():
 @router.get("/{user_id}")
 async def get_specific_user(user_id: str):
     '''
-    Fetch one user by their unique user_id.
+    Fetch a specific user by their unique user_id.
 
     Params:
         user_id (str): the UUID of the user row in Supabase

@@ -25,8 +25,8 @@ export default function LoginPage() {
     const navigate = useNavigate() // How different components will result in navigating app
 
     // Handling the submission of email and password
-    const handleSubmit = async (e) => {
-        e.preventDefault() // Preventing full browser reload to allow for own logic
+    const handleSubmit = async (err) => {
+        err.preventDefault() // Preventing full browser reload to allow for own logic
         setError("") // Clearing previous errors
 
         // Handling errors for signing in to app
@@ -61,7 +61,7 @@ export default function LoginPage() {
 
             // Error checking from supabase
             if (error) {
-                setError(error.message)
+                setError(error.message + ".")
                 return
             }
 
@@ -69,11 +69,11 @@ export default function LoginPage() {
                 // POST to API as JSON
                 const response = await fetch("http://localhost:8000/users", {
                     method: "POST",
-                    headers: {"Content-Type" : "application/json"},
+                    headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
-                        user_id : data.user.id,
-                        first_name : firstName,
-                        last_name : lastName
+                        user_id: data.user.id,
+                        first_name: firstName,
+                        last_name: lastName
                     })
                 })
                 // response.ok is true if server returns 200 success code

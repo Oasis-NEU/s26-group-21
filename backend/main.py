@@ -15,7 +15,7 @@ from routers import listings, users  # import each router module
 
 app = FastAPI()
 
-# CORS (Cross-Origin Resource Sharing) allows our React frontend
+# CORS (Cross-Origin Resource Sharing) allows React frontend
 # running on localhost:5173 to make requests to this backend.
 origins = [
     "http://localhost:5173"

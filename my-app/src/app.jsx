@@ -38,7 +38,7 @@ function App() {
         <Route path="/" element={<LoginPage />} /> {/* root path, first thing user will see */}
         <Route path="/marketplace" element={
           <ProtectedRoute session={session}>
-            <MarketplacePage session={session}/>
+            <MarketplacePage session={session} />
           </ProtectedRoute>
         } />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
