@@ -1,5 +1,5 @@
 import { useMemo, useState, useEffect } from 'react'
-import { categories, marketplaceItems } from './marketplaceData'
+import { categories } from './marketplaceData'
 
 // Importing components to be used on marketplace
 import Navbar from '../navbar/navbar.jsx'
@@ -20,6 +20,7 @@ function MarketplacePage({ session }) {
   const [activeView, setActiveView] = useState('all')
   const [showAddListing, setShowAddListing] = useState(false)
   const [firstName, setFirstName] = useState('')
+  const [listings, setListings] = useState([])
 
   useEffect(() => {
     fetch(`http://localhost:8000/users/${session.user.id}`)
@@ -27,15 +28,22 @@ function MarketplacePage({ session }) {
     .then(data => setFirstName(data[0].first_name))
   }, [])
 
+  useEffect(() => {
+    fetch(`http://localhost:8000/listings/`)
+    .then(res => res.json())
+    .then(data => setListings(data))
+  }, [])
+
   const filteredItems = useMemo(() => {
-    let items = marketplaceItems
+    let items = listings
 
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase()
       items = items.filter(
         (item) =>
           item.title.toLowerCase().includes(q) ||
-          item.shortDescription.toLowerCase().includes(q),
+          item.description.toLowerCase().includes(q) ||
+          String(item.isbn).includes(q.replaceAll('-', ''))
       )
     }
 
@@ -50,7 +58,7 @@ function MarketplacePage({ session }) {
     }
 
     return items
-  }, [searchQuery, selectedCategory, sortOption])
+  }, [listings, searchQuery, selectedCategory, sortOption])
 
   return (
     <>
@@ -88,7 +96,8 @@ function MarketplacePage({ session }) {
 
       <DetailsOverlay item={selectedItem} onClose={() => setSelectedItem(null)} />
       <AddListingFAB onClick={() => setShowAddListing(true)} />
-      <AddListingOverlay open={showAddListing} onClose={() => setShowAddListing(false)} />
+      <AddListingOverlay open={showAddListing} 
+        onClose={() => setShowAddListing(false)} session = {session}/>
     </>
   )
 }

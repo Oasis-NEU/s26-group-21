@@ -95,6 +95,7 @@ async def add_listing(textbook: Textbook):
                 "title": textbook.title,
                 "authors": textbook.authors,
                 "isbn": textbook.isbn,
+                "category": textbook.category,
                 "description": textbook.description,
                 "price": textbook.price,
                 "image_url": textbook.image_url,

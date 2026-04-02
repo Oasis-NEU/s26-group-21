@@ -18,6 +18,7 @@ class Textbook(BaseModel):
         title       (str)        : name of the textbook
         authors     (str)        : author(s) of the textbook
         isbn        (int)        : unique ISBN number
+        category    (str)        : the category of which the textbook falls under
         description (str | None) : optional description — can be left blank
         price       (float)      : listing price in dollars
         image_url   (str)        : link to an image of the textbook
@@ -26,6 +27,7 @@ class Textbook(BaseModel):
     title: str
     authors: str
     isbn: int
+    category: str
     description: str | None = None
     price: float
     image_url: str

@@ -7,12 +7,12 @@ function ListingCard({ item, onViewDetails }) {
   return (
     <article className="listingCard" onClick={() => onViewDetails(item)}>
       <div className="listingCard-imageWrapper">
-        <img src={item.thumbnailUrl} alt={item.title} />
+        <img src={item.image_url} alt={item.title} />
       </div>
       <div className="listingCard-body">
         <span className="listingCard-category">{item.category}</span>
         <h3 className="listingCard-title">{item.title}</h3>
-        <p className="listingCard-description">{item.shortDescription}</p>
+        <p className="listingCard-description">{item.description}</p>
         <div className="listingCard-meta">
           <span className="listingCard-price">${item.price.toFixed(2)}</span>
         </div>
@@ -38,7 +38,7 @@ function ListingGrid({ items, onViewDetails }) {
   if (!items.length) {
     return (
       <div className="listingGrid-empty">
-        <h3>No items found</h3>
+        <h3>No textbooks found</h3>
         <p>Try adjusting your search or filters.</p>
       </div>
     )
@@ -47,7 +47,7 @@ function ListingGrid({ items, onViewDetails }) {
   return (
     <div className="listingGrid">
       {items.map((item) => (
-        <ListingCard key={item.id} item={item} onViewDetails={onViewDetails} />
+        <ListingCard key={item.textbook_id} item={item} onViewDetails={onViewDetails} />
       ))}
     </div>
   )

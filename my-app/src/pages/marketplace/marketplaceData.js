@@ -1,4 +1,4 @@
-export const categories = [
+export let categories = [
   'All',
   'Computer Science',
   'Engineering',

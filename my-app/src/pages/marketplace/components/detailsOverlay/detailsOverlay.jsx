@@ -8,7 +8,7 @@ function DetailsOverlay({ item, onClose }) {
   const mailtoHref = `mailto:${item.sellerEmail}?subject=${encodeURIComponent(
     `Interested in "${item.title}" textbook`,
   )}&body=${encodeURIComponent(
-    `Hi,\n\nI'm interested in your listing for "${item.title}" on the Northeastern Campus Textbook Marketplace.\n\nIs it still available?\n\nThanks,\n`,
+    `Hi,\n\nI'm interested in your listing for "${item.title}" on the TextLook.\n\nIs it still available?\n\nThanks,\n`,
   )}`
 
   return (
@@ -18,7 +18,7 @@ function DetailsOverlay({ item, onClose }) {
         <button type="button" className="detailsOverlay-close" onClick={onClose}>×</button>
 
         <div className="detailsOverlay-imageWrapper">
-          <img src={item.thumbnailUrl} alt={item.title} />
+          <img src={item.image_url} alt={item.title} />
         </div>
 
         <div className="detailsOverlay-body">
@@ -53,7 +53,7 @@ function DetailsOverlay({ item, onClose }) {
             <span className="detailsOverlay-value">{item.quantity}</span>
           </div>
 
-          <p className="detailsOverlay-description">{item.shortDescription}</p>
+          <p className="detailsOverlay-description">{item.description}</p>
 
           <a href={mailtoHref} className="detailsOverlay-primary">
             Contact seller
