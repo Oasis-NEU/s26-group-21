@@ -21,15 +21,24 @@ function ProtectedRoute({ session, children }) {
 }
 
 function App() {
-  // Rendering UI based on state of session
-  const [session, setSession] = useState(null)
+  const [session, setSession] = useState(null) // Rendering UI based on state of session
+  const [loading, setLoading] = useState(true) // Loading state on app to prevent login redirection
 
   // Keeping track of session as users log in and out
   useEffect(() => {
-    supabase.auth.onAuthStateChange((_event, session) => {
+    async function fetchSession() {
+      const { data: { session } } = await supabase.auth.getSession()
       setSession(session)
-    })
+      setLoading(false)
+      supabase.auth.onAuthStateChange((_event, session) => {
+        setSession(session)
+        setLoading(false)
+      })
+    }
+    fetchSession()
   }, [])
+
+  if (loading) return null
 
   return (
     <>

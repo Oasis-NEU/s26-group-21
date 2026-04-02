@@ -24,14 +24,18 @@ function MarketplacePage({ session }) {
 
   useEffect(() => {
     fetch(`http://localhost:8000/users/${session.user.id}`)
-    .then(res => res.json())
-    .then(data => setFirstName(data[0].first_name))
+      .then(res => res.json())
+      .then(data => setFirstName(data[0].first_name))
   }, [])
 
-  useEffect(() => {
+  const fetchListings = () => {
     fetch(`http://localhost:8000/listings/`)
-    .then(res => res.json())
-    .then(data => setListings(data))
+      .then(res => res.json())
+      .then(data => setListings(data))
+  }
+
+  useEffect(() => {
+    fetchListings()
   }, [])
 
   const filteredItems = useMemo(() => {
@@ -96,8 +100,9 @@ function MarketplacePage({ session }) {
 
       <DetailsOverlay item={selectedItem} onClose={() => setSelectedItem(null)} />
       <AddListingFAB onClick={() => setShowAddListing(true)} />
-      <AddListingOverlay open={showAddListing} 
-        onClose={() => setShowAddListing(false)} session = {session}/>
+      <AddListingOverlay open={showAddListing}
+        onClose={() => setShowAddListing(false)} session={session}
+        fetchListings={fetchListings} />
     </>
   )
 }

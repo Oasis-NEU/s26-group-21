@@ -12,7 +12,7 @@ const EMPTY_FORM = {
   price: ''
 }
 
-function AddListingOverlay({ open, onClose, session }) {
+function AddListingOverlay({ open, onClose, session, fetchListings}) {
   const [form, setForm] = useState(EMPTY_FORM)
   const [image, setImage] = useState(null)
   const [dragging, setDragging] = useState(false)
@@ -45,6 +45,7 @@ function AddListingOverlay({ open, onClose, session }) {
 
   async function handleSubmit(e) {
     e.preventDefault()
+    // Checking for missing fields in submission
     if (image === null) {
       setError("Please add an image.")
       return
@@ -65,6 +66,20 @@ function AddListingOverlay({ open, onClose, session }) {
       setError("Please select a category.")
       return
     }
+
+    // Ensuring image will render on marketplace
+
+    // Generating unique file name
+    let uniqueFileName = `${session.user.id}--${Date.now()}`
+    // Checking for errors during image upload to bucket in supabase
+    let { error: uploadError } = await supabase.storage.from('listing_images').upload(uniqueFileName, image.file)
+    if (uploadError) {
+      setError("Could not upload image. Please try again.")
+      return
+    }
+    // Creating public URL to be used in marketplace
+    let { data: { publicUrl } } = await supabase.storage.from('listing_images').getPublicUrl(uniqueFileName)
+
     try {
       // Post to API as JSON
       const response = await fetch("http://localhost:8000/listings", {
@@ -73,7 +88,7 @@ function AddListingOverlay({ open, onClose, session }) {
         body: JSON.stringify({
           ...form, // Spreading all form fields in
           user_id: session.user.id,
-          image_url: image.url
+          image_url: publicUrl
         })
       })
       // response.ok is true if server returns 200 success code
@@ -86,6 +101,7 @@ function AddListingOverlay({ open, onClose, session }) {
       setError("Network error. Please check your connection and try again.")
       return
     }
+    fetchListings()
     handleClose()
   }
 
@@ -178,7 +194,7 @@ function AddListingOverlay({ open, onClose, session }) {
 
             <div className="addListingOverlay-field">
               <label htmlFor="al-description">Description
-                <span className="addListingOverlay-optional">(optional)</span>
+                <span className="addListingOverlay-optional"> (optional)</span>
               </label>
               <textarea
                 id="al-description"

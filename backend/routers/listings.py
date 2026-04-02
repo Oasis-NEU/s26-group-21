@@ -20,6 +20,7 @@ async def get_listings():
     response = (
         supabase.table("textbook_listings")
         .select("*")
+        .order('listed_at', desc=True)
         .execute()
     )
     return response.data
