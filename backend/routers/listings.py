@@ -8,11 +8,13 @@ The prefix "/listings" is set in main.py, so we don't repeat it here.
 
 from fastapi import APIRouter
 from database import supabase  # import the shared Supabase client
-from models import Textbook     # import the Textbook data model
+from models import Textbook    # import the Textbook data model
 
 # APIRouter works like FastAPI() but for a section of the app
 router = APIRouter()
 
+# FastAPI reads top down, want to make sure it matches ids
+# Should get less specific as we move down
 
 @router.get("/")
 async def get_listings():
@@ -25,8 +27,6 @@ async def get_listings():
     )
     return response.data
 
-# Placed above since this route is more specific
-# FastAPI reads top down, want to make sure it matches ids
 @router.get("/user/{user_id}")
 async def get_listings_by_user(user_id: str):
     '''
@@ -43,6 +43,8 @@ async def get_listings_by_user(user_id: str):
         .execute()
     )
     return response.data
+
+
 
 @router.get("/{textbook_id}")
 async def get_listing_by_textbook(textbook_id: str):

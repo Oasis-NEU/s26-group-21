@@ -11,7 +11,7 @@ All actual endpoint logic lives in the routers/ folder.
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import listings, users  # import each router module
+from routers import listings, users, wants  # import each router module
 
 app = FastAPI()
 
@@ -34,3 +34,6 @@ app.include_router(listings.router, prefix="/listings")
 
 # Register the users router — all its endpoints will start with /users
 app.include_router(users.router, prefix="/users")
+
+# Register the wants router - all its endpoints will start with /wants
+app.include_router(wants.router, prefix="/wants")

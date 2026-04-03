@@ -14,7 +14,7 @@ import { useState, useEffect } from 'react'
 import { supabase } from './supabase'
 
 function ProtectedRoute({ session, children }) {
-  if (!session) {
+  if (!session && !import.meta.env.DEV) {
     return <Navigate to="/" />
   }
   return children

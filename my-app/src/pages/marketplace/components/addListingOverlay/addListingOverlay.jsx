@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react'
 import './addListingOverlay.css'
-import { categories } from '../../marketplaceData'
+import { categories } from '../../categories'
 import { supabase } from '../../../../supabase'
 
 const EMPTY_FORM = {

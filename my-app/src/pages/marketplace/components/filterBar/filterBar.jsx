@@ -22,7 +22,7 @@ function FilterBar({
         <div className="filterBar-search">
           <input
             type="text"
-            placeholder="Search textbooks by title or course..."
+            placeholder="Search textbooks by title, course, or ISBN"
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
           />

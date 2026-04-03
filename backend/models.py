@@ -45,3 +45,15 @@ class User(BaseModel):
     user_id: str
     first_name: str
     last_name: str
+
+class Want(BaseModel):
+    '''
+    Represents the data needed to create a new 'want' in the database.
+    Each field maps to a column in the wants table in Supabase
+
+    Fields:
+    user_id     (str)       : the UUID of the user
+    textbook_id (str)       : the UUID of the textbook the user wants
+    '''
+    user_id: str
+    textbook_id: str
