@@ -8,8 +8,20 @@
   padding: 2.5rem 1.5rem;
   text-align: center;
   border-radius: 0.75rem;
-  border: 1px dashed #cbd5f5;
-  color: #64748b;
+  color: #e03535;
+  min-height: 32rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.listingGrid-empty h3 {
+  margin-bottom: -0.1rem;
+}
+
+.listingGrid-empty p {
+  color: #f87171;
 }
 
 .listingCard {
@@ -129,6 +141,30 @@
 
 .listingCard-star--active {
   color: #f59e0b;
+}
+
+.listingCard-trash {
+  position: absolute;
+  bottom: 0.90rem;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #cbd5e1;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  transition: color 160ms ease, transform 160ms ease;
+}
+
+.listingCard-trash svg {
+  width: 18px;
+  height: 18px;
+}
+
+.listingCard-trash:hover {
+  color:#e03535;
+  transform: scale(1.15);
 }
 
 .listingCard-cta {

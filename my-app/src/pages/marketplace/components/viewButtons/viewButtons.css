@@ -10,7 +10,7 @@
 .marketplace-view-btn {
   padding: 0.4rem 1.1rem;
   border-radius: 999px;
-  border: 2px solid transparent;
+  border: 3px solid transparent;
   font-size: 0.85rem;
   font-weight: 600;
   font-family: "Avenir", "Avenir Next", "Nunito", sans-serif;
@@ -18,26 +18,39 @@
   transition: opacity 160ms ease, transform 160ms ease;
 }
 
-.marketplace-view-btn--blue {
+.marketplace-view-btn--listings {
   background-color: #3b82f6;
   color: #ffffff;
   border-color: #3b82f6;
 }
 
-.marketplace-view-btn--blue.marketplace-view-btn--active {
+.marketplace-view-btn--listings.marketplace-view-btn--active {
   background-color: #1d4ed8;
-  border-color: #1d4ed8;
+  border-color: #9ca3af;
 }
 
-.marketplace-view-btn--yellow {
+.marketplace-view-btn--wants {
   background-color: #f59e0b;
   color: #ffffff;
   border-color: #f59e0b;
 }
 
-.marketplace-view-btn--yellow.marketplace-view-btn--active {
+.marketplace-view-btn--wants.marketplace-view-btn--active {
   background-color: #d97706;
-  border-color: #d97706;
+  border-color: #9ca3af;
+}
+
+.marketplace-view-btn--return {
+  font-size: 1rem;
+  background-color: #fca5a5;
+  color: #ffffff;
+  border-color: #fca5a5;
+  padding: 0.2rem 0.9rem;
+}
+
+.marketplace-view-btn--return.marketplace-view-btn--active {
+  background-color: #ef4444;
+  border-color: #ef4444;
 }
 
 .marketplace-view-btn:hover {

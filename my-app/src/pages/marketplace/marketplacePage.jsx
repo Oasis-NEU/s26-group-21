@@ -161,7 +161,7 @@ function MarketplacePage({ session }) {
     }
 
     return items
-  }, [listings, activeView, searchQuery, selectedCategory, sortOption])
+  }, [listings, wants, activeView, searchQuery, selectedCategory, sortOption])
 
   return (
     <>
@@ -170,7 +170,7 @@ function MarketplacePage({ session }) {
         <section className="marketplace-hero">
           <h1>Welcome to the Marketplace, <span className="marketplace-hero-look">{firstName}</span></h1>
           <p className="marketplace-subtitle">
-            Buy and sell course textbooks directly with other Huskies.
+            Buy and sell textbooks directly with other Huskies.
           </p>
         </section>
 
@@ -207,6 +207,7 @@ function MarketplacePage({ session }) {
         wants={wants}
         session={session}
         onToggleWant={onToggleWant}
+        onDeleteListing={onDeleteListing}
         onClose={() => setSelectedItem(null)} />
       <AddListingFAB onClick={() => setShowAddListing(true)} />
       <AddListingOverlay

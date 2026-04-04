@@ -11,7 +11,6 @@
   line-height: 1.5;
   font-weight: 400;
   color: #0f172a; /* Text color when no other text color is set */
-  background-color: #f3f4f6; /* Behind every page when no other background is set */
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -35,7 +34,7 @@ body {
 }
 
 body {
-  background-color: #f3f4f6;
+  background-color: #e5e7eb; /* Behind every page when no other background is set */;
 }
 
 #root {
