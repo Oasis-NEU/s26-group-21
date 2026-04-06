@@ -77,6 +77,7 @@
 
 .detailsOverlay-category {
   padding: 0.2rem 0.65rem;
+  margin-left: -0.35rem;
   border-radius: 999px;
   background-color: #ffd6d6;
   color: #e03535;
@@ -149,7 +150,8 @@
   transition: background-color 0.2s;
 }
 
-.listingCard-star {
+.detailsOverlay-star,
+.detailsOverlay-pencil {
   position: absolute;
   bottom: 0.90rem;
   right: 0.75rem;
@@ -163,24 +165,30 @@
   transition: color 160ms ease, transform 160ms ease;
 }
 
-.detailsOverlay-titleRow .listingCard-star {
+.detailsOverlay-star, .detailsOverlay-pencil {
   position: static;
   flex-shrink: 0;
 }
 
-.listingCard-star svg {
+.detailsOverlay-star, .detailsOverlay-pencil svg {
   width: 18px;
   height: 18px;
 }
 
-.listingCard-star:hover {
+.detailsOverlay-star:hover {
   color: #f59e0b;
   transform: scale(1.15);
 }
 
-.listingCard-star--active {
+.detailsOverlay-star--active {
   color: #f59e0b;
 }
+
+.detailsOverlay-pencil:hover {
+  color: #00008B;
+  transform: scale(1.15)
+}
+
 
 .detailsOverlay-primary:hover {
   background-color: #c02020;

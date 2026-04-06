@@ -1,0 +1,7 @@
+.spinner-location {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 35vh;
+  min-height: 100vh;
+}

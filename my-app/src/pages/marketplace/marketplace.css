@@ -1,11 +1,12 @@
 .marketplace {
   width: 100%;
   margin: 0;
-  padding: 2.5rem 2.5rem 3rem;
+  padding: 2.5rem 2.5rem 2.8rem;
   background:
     radial-gradient(circle at top left, rgba(185, 28, 28, 0.08), transparent),
     linear-gradient(to bottom, #f9fafb, #e5e7eb);
   font-family: "Avenir", "Avenir Next", "Nunito", sans-serif;
+  min-height: 100vh;
 }
 
 .marketplace-hero {
@@ -42,4 +43,49 @@
   .marketplace {
     padding: 1.5rem 1rem 2.5rem;
   }
+}
+
+.marketplace-banner {
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  margin-left: -12.5%;
+  width: 100%;
+  max-width: 25%;
+  color: #cc0000;
+  background-color: #fdecea;
+  border: 1px solid #f5c6c6;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 15px;
+  text-align: center;
+  box-sizing: border-box;
+  z-index: 1000;
+  opacity: 0;
+  animation: fadeInOut 5s linear forwards;
+}
+
+@keyframes fadeInOut {
+  0% { 
+    transform: translateY(-100%);
+    opacity: 0; }
+  10% { 
+    transform: translateY(0);
+    opacity: 0.9; 
+    
+  }  /* Fades in quickly */
+  90% { 
+    transform: translateY(0);
+    opacity: 0.9; } /* Stays visible */
+  100% { 
+    transform: translateY(-100%);
+    opacity: 0; } /* Fades out at the end */
+}
+
+.spinner-location {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 80vh;
+  min-height: 60vh;
 }

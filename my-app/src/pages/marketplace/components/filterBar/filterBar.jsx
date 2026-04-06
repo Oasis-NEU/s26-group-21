@@ -4,6 +4,8 @@ const sortOptions = [
   { value: 'relevance', label: 'Relevance' },
   { value: 'price-asc', label: 'Price: Low to High' },
   { value: 'price-desc', label: 'Price: High to Low' },
+  { value: 'newest', label: 'Newest'},
+  { value: 'oldest', label: 'Oldest'}
 ]
 
 function FilterBar({
@@ -22,7 +24,7 @@ function FilterBar({
         <div className="filterBar-search">
           <input
             type="text"
-            placeholder="Search textbooks by title or course..."
+            placeholder="Search textbooks by title, course, or ISBN"
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
           />
