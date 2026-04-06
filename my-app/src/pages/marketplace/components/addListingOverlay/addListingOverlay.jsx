@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import './addListingOverlay.css'
 import { categories } from '../../categories'
 import { supabase } from '../../../../supabase'
@@ -12,12 +12,21 @@ const EMPTY_FORM = {
   price: ''
 }
 
-function AddListingOverlay({ open, onClose, session, fetchListings}) {
-  const [form, setForm] = useState(EMPTY_FORM)
+function AddListingOverlay({ open, onClose, editListing, session, fetchListings }) {
+  // If user wants to editListing, form updates to correlate that (form fields are filled)
+  // Extra fields in editListing won't affect state variable, form only uses variables it knows about
+  const [form, setForm] = useState(editListing ? { ...editListing } : EMPTY_FORM)
+
   const [image, setImage] = useState(null)
   const [dragging, setDragging] = useState(false)
   const [error, setError] = useState("")
   const fileInputRef = useRef(null)
+
+  useEffect(() => {
+    if (editListing) { setForm({ ...editListing }) }
+    else { setForm(EMPTY_FORM) }
+  }, [editListing])
+
 
   if (!open) return null
 
@@ -25,7 +34,7 @@ function AddListingOverlay({ open, onClose, session, fetchListings}) {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }))
   }
 
-  function acceptFile(file) {
+  function acceptImage(file) {
     if (!file || !file.type.startsWith('image/')) return
     setImage({ file, url: URL.createObjectURL(file) })
   }
@@ -33,7 +42,7 @@ function AddListingOverlay({ open, onClose, session, fetchListings}) {
   function handleDrop(e) {
     e.preventDefault()
     setDragging(false)
-    acceptFile(e.dataTransfer.files[0])
+    acceptImage(e.dataTransfer.files[0])
   }
 
   function handleClose() {
@@ -46,7 +55,7 @@ function AddListingOverlay({ open, onClose, session, fetchListings}) {
   async function handleSubmit(e) {
     e.preventDefault()
     // Checking for missing fields in submission
-    if (image === null) {
+    if (image === null && !editListing) {
       setError("Please add an image.")
       return
     }
@@ -67,39 +76,67 @@ function AddListingOverlay({ open, onClose, session, fetchListings}) {
       return
     }
 
-    // Ensuring image will render on marketplace
-
-    // Generating unique file name
-    let uniqueFileName = `${session.user.id}--${Date.now()}`
-    // Checking for errors during image upload to bucket in supabase
-    let { error: uploadError } = await supabase.storage.from('listing_images').upload(uniqueFileName, image.file)
-    if (uploadError) {
-      setError("Could not upload image. Please try again.")
-      return
-    }
-    // Creating public URL to be used in marketplace
-    let { data: { publicUrl } } = await supabase.storage.from('listing_images').getPublicUrl(uniqueFileName)
-
-    try {
-      // Post to API as JSON
-      const response = await fetch("http://localhost:8000/listings", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...form, // Spreading all form fields in
-          user_id: session.user.id,
-          image_url: publicUrl
-        })
-      })
-      // response.ok is true if server returns 200 success code
-      if (!response.ok) {
-        setError("Failed to post listing.")
+    let imageUrl // The image url of image the user added
+    // If user has dragged a new image into the form
+    if (image !== null) {
+      // Generating unique file name
+      let uniqueFileName = `${session.user.id}--${Date.now()}`
+      // Checking for errors during image upload to bucket in supabase
+      let { error: uploadError } = await supabase.storage.from('listing_images').upload(uniqueFileName, image.file)
+      if (uploadError) {
+        setError("Could not upload image. Please try again.")
         return
       }
-    } catch {
-      // If fetch fails entirely due to no response from backend
-      setError("Network error. Please check your connection and try again.")
-      return
+      // Creating public URL to be used in marketplace
+      let { data: { publicUrl } } = await supabase.storage.from('listing_images').getPublicUrl(uniqueFileName)
+      imageUrl = publicUrl // Setting image url to public url from supabase
+    } else { imageUrl = editListing.image_url } // If user did not drag a new image, sets to already existing url
+
+    if (!editListing) {
+      // POST request if editListing is null, meaning user is creating new listing
+      try {
+        // Post to API as JSON
+        const response = await fetch("http://localhost:8000/listings", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ...form, // Spreading all form fields in
+            user_id: session.user.id,
+            image_url: imageUrl
+          })
+        })
+        // response.ok is true if server returns 200 success code
+        if (!response.ok) {
+          setError("Failed to post listing.")
+          return
+        }
+      } catch {
+        // If fetch fails entirely due to no response from backend
+        setError("Network error. Please check your connection and try again.")
+        return
+      }
+    }
+    else {
+      // PUT request if editListing is not null, meaning user is editing a pre-existing listing
+      try {
+        const response = await fetch(`http://localhost:8000/listings/${editListing.textbook_id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ...form, // Spreading all form fields in that user edited
+            image_url: imageUrl
+          })
+        })
+        if (!response.ok) {
+          // response.ok is true if server returns 200 success code
+          setError("Failed to edit listing.")
+          return
+        }
+      } catch {
+        // If fetch fails entirely due to no response from backend
+        setError("Network error. Please check your connections and try again.")
+        return
+      }
     }
     fetchListings()
     handleClose()
@@ -133,23 +170,33 @@ function AddListingOverlay({ open, onClose, session, fetchListings}) {
                   onClick={(e) => { e.stopPropagation(); setImage(null) }}
                 >×</button>
               </>
-            ) : (
-              <div className="addListingOverlay-dropHint">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                  strokeWidth="0.75" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="3" y="3" width="18" height="18" rx="3" />
-                  <circle cx="8.5" cy="8.5" r="1.5" />
-                  <polyline points="21 15 16 10 5 21" />
-                </svg>
-                <span>Drag &amp; drop an image, or <strong>click to browse</strong></span>
-              </div>
-            )}
+            )
+              : editListing ? (
+                <>
+                  <img src={editListing.image_url} alt="preview" className="addListingOverlay-preview" />
+                  <button
+                    type="button"
+                    className="addListingOverlay-removeImg"
+                    onClick={(e) => { e.stopPropagation(); setImage(null) }}
+                  >×</button>
+                </>
+              ) : (
+                  <div className="addListingOverlay-dropHint">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                      strokeWidth="0.75" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="3" y="3" width="18" height="18" rx="3" />
+                      <circle cx="8.5" cy="8.5" r="1.5" />
+                      <polyline points="21 15 16 10 5 21" />
+                    </svg>
+                    <span>Drag &amp; drop an image, or <strong>click to browse</strong></span>
+                  </div>
+                )}
             <input
               ref={fileInputRef}
               type="file"
               accept="image/*"
               hidden
-              onChange={(e) => acceptFile(e.target.files[0])}
+              onChange={(e) => acceptImage(e.target.files[0])}
             />
           </div>
 

@@ -2,7 +2,9 @@ import { useMemo, useState, useEffect } from 'react'
 import { categories } from './categories.js'
 
 // Importing components to be used on marketplace
-import Navbar from '../navbar/navbar.jsx'
+import Navbar from '../../components/navbar/navbar.jsx'
+import Spinner from '../../components/spinner/spinner.jsx'
+
 import FilterBar from './components/filterBar/filterBar.jsx'
 import ViewButtons from './components/viewButtons/viewButtons.jsx'
 import ListingGrid from './components/listingCard/listingCard.jsx'
@@ -23,6 +25,11 @@ function MarketplacePage({ session }) {
   const [listings, setListings] = useState([]) // setting the listings through database
   const [wants, setWants] = useState([]) // setting user wants through database
 
+  const [error, setError] = useState('') // setting error to be displayed as banner
+  const [isLoading, setIsLoading] = useState(true) // loading listings on marketplace for UI
+
+  const [editListing, setEditListing] = useState(null) // if user is editing an existing listing
+
   // When clicking star, updates wants in database
   async function onToggleWant(textbook_id) {
     // If textbook_id exists in wants, then user wants to delete it
@@ -35,12 +42,12 @@ function MarketplacePage({ session }) {
         })
         // response.ok is true if server returns 200 success code
         if (!response.ok) {
-          console.error("Could not remove textbook from wants.")
+          setError("Could not remove textbook from wants.")
           return
         }
       } catch {
         // If fetch fails entirely due to no response from backend
-        console.error("Network error. Please check your connection and try again.")
+        setError("Network error. Please check your connection and try again.")
         return
       }
     }
@@ -59,12 +66,12 @@ function MarketplacePage({ session }) {
         })
         // response.ok is true if server returns 200 success code
         if (!response.ok) {
-          console.error("Could not add textbook to wants.")
+          setError("Could not add textbook to wants.")
           return
         }
       } catch {
         // If fetch fails entirely due to no response from backend
-        console.error("Network error. Please check your connection and try again.")
+        setError("Network error. Please check your connection and try again.")
         return
       }
     }
@@ -80,17 +87,20 @@ function MarketplacePage({ session }) {
       })
       // response.ok is true if server returns 200 success code
       if (!response.ok) {
-        console.error("Could not remove listing.")
+        setError("Could not remove listing.")
         return
       }
     } catch {
       // If fetch fails entirely due to no response from backend
-      console.error("Network error. Please check your connection and try again.")
+      setError("Network error. Please check your connection and try again.")
       return
     }
     fetchListings()
   }
 
+  // Sends PUT fetch for user to edit a listing
+  async function onEditListing(item) { setEditListing(item) }
+  
   // Fetches listings once after component loads
   useEffect(() => {
     fetchListings()
@@ -108,11 +118,22 @@ function MarketplacePage({ session }) {
     if (session) fetchWants()
   }, [])
 
+  useEffect(() => {
+    let timer = setTimeout(() => {
+      setError('')
+    }, 4985)
+
+    return () => {
+      clearTimeout(timer)
+    }
+  }, [error])
+
   // Fetches all listings from backend
   const fetchListings = () => {
+    setIsLoading(true)
     fetch(`http://localhost:8000/listings/`)
       .then(res => res.json())
-      .then(data => setListings(data))
+      .then(data => { setListings(data); setIsLoading(false) })
   }
 
   // Fetches user's wants from backend
@@ -155,9 +176,17 @@ function MarketplacePage({ session }) {
 
     // Sorting listings by price
     if (sortOption === 'price-asc') {
+      // Lowest price - highest price --> negative number, cheapest first
       items = [...items].sort((a, b) => a.price - b.price)
     } else if (sortOption === 'price-desc') {
+      // Highest price - lowest price --> positive number, most expensive first
       items = [...items].sort((a, b) => b.price - a.price)
+    } else if (sortOption === 'newest') {
+      // Newest date - oldest date --> positive number, newest first
+      items = [...items].sort((a, b) => new Date(b.listed_at) - new Date(a.listed_at))
+    } else if (sortOption === 'oldest') {
+      // Oldest date - newest date --> negative number, oldest first
+      items = [...items].sort((a, b) => new Date(a.listed_at) - new Date(b.listed_at))
     }
 
     return items
@@ -173,6 +202,14 @@ function MarketplacePage({ session }) {
             Buy and sell textbooks directly with other Huskies.
           </p>
         </section>
+
+        {error !== '' &&
+          <div
+            id="temp-banner"
+            className="marketplace-banner"
+          > {error}
+          </div>
+        }
 
         <ViewButtons activeView={activeView} onViewChange={setActiveView} />
 
@@ -190,15 +227,22 @@ function MarketplacePage({ session }) {
         </section>
 
         <section className="marketplace-content">
-          <ListingGrid
-            items={filteredItems}
-            wants={wants}
-            session={session}
-            onToggleWant={onToggleWant}
-            activeView={activeView}
-            onDeleteListing={onDeleteListing}
-            onViewDetails={(item) => setSelectedItem(item)}
-          />
+          {isLoading == false ?
+            <ListingGrid
+              items={filteredItems}
+              wants={wants}
+              session={session}
+              onToggleWant={onToggleWant}
+              activeView={activeView}
+              onDeleteListing={onDeleteListing}
+              onViewDetails={(item) => setSelectedItem(item)}
+            /> :
+            <div
+              className='spinner-location'
+            >
+              <Spinner />
+            </div>
+          }
         </section>
       </main>
 
@@ -207,16 +251,17 @@ function MarketplacePage({ session }) {
         wants={wants}
         session={session}
         onToggleWant={onToggleWant}
+        onEditListing={onEditListing}
         onDeleteListing={onDeleteListing}
         onClose={() => setSelectedItem(null)} />
       <AddListingFAB onClick={() => setShowAddListing(true)} />
       <AddListingOverlay
-        open={showAddListing}
+        open={showAddListing || editListing !== null}
         session={session}
         fetchListings={fetchListings}
-        activeView={activeView}
-        onDeleteListing={onDeleteListing}
-        onClose={() => setShowAddListing(false)} />
+        editListing={editListing}
+        onEditListing={onEditListing}
+        onClose={() => { setShowAddListing(false); setEditListing(null) }} />
     </>
   )
 }

@@ -4,6 +4,8 @@ const sortOptions = [
   { value: 'relevance', label: 'Relevance' },
   { value: 'price-asc', label: 'Price: Low to High' },
   { value: 'price-desc', label: 'Price: High to Low' },
+  { value: 'newest', label: 'Newest'},
+  { value: 'oldest', label: 'Oldest'}
 ]
 
 function FilterBar({

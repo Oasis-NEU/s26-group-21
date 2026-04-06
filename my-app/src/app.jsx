@@ -3,10 +3,13 @@
  * page components (Login, Marketplace, ForgotPassword, Settings)
  */
 
+import './app.css'
+
 import LoginPage from './pages/login/loginPage'
 import ForgotPasswordPage from './pages/login/forgotPassword/forgotPassword'
 import MarketplacePage from './pages/marketplace/marketplacePage'
 import Settings from './pages/settings/settings'
+import Spinner from './components/spinner/spinner.jsx'
 
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
@@ -38,7 +41,11 @@ function App() {
     fetchSession()
   }, [])
 
-  if (loading) return null
+  if (loading) return (
+    <div className='spinner-location'>
+      <Spinner />
+    </div>
+  )
 
   return (
     <>

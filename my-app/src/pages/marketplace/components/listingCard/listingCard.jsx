@@ -72,7 +72,7 @@ function ListingGrid({ items, onViewDetails, wants,
     <div className="listingGrid">
       {items.map((item) => (
         <ListingCard
-          key={item.textbook_id}
+          key={item.textbook_id} // React only has to re-render specific textbook
           session={session}
           item={item}
           wants={wants}

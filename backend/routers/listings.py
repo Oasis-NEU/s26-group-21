@@ -66,7 +66,7 @@ async def get_listing_by_textbook(textbook_id: str):
 @router.delete("/{textbook_id}")
 async def delete_listing(textbook_id: str):
     '''
-    Delete one listing by its unique textbook_id.
+    Delete a listing by its unique textbook_id.
 
     Params:
         textbook_id (str): the UUID of the textbook row to delete
@@ -79,6 +79,22 @@ async def delete_listing(textbook_id: str):
     )
     return response.data
 
+@router.put("/{textbook_id}")
+async def put_listing(textbook_id: str, textbook: Textbook):
+    '''
+    Updates an exisiting listing by its unique textbook_id.
+
+    Params:
+        textbook_id (str): the UUID of the textbook to be edited
+        textbook    (Textbook): the validated listings data from the request body
+    '''
+    response = (
+        supabase.table("textbook_listings")
+        .update(textbook.model_dump())
+        .eq("textbook_id", textbook_id)
+        .execute()
+    )
+    return response.data
 
 @router.post("/")
 async def add_listing(textbook: Textbook):
