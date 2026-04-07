@@ -36,7 +36,7 @@ function MarketplacePage({ session }) {
     if (wants.includes(textbook_id)) {
       try {
         const response = await fetch(
-          `http://localhost:8000/wants/${textbook_id}`, {
+          `${import.meta.env.VITE_API_URL}/wants/${textbook_id}`, {
           method: "DELETE",
           headers: { "Content-Type": "application/json" }
         })
@@ -56,7 +56,7 @@ function MarketplacePage({ session }) {
       try {
         // POST to API as JSON
         const response = await fetch(
-          'http://localhost:8000/wants', {
+          `${import.meta.env.VITE_API_URL}/wants`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -81,7 +81,7 @@ function MarketplacePage({ session }) {
   // Sends DELETE fetch for user to remove a listing
   async function onDeleteListing(textbook_id) {
     try {
-      const response = await fetch(`http://localhost:8000/listings/${textbook_id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/listings/${textbook_id}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" }
       })
@@ -108,7 +108,7 @@ function MarketplacePage({ session }) {
 
   // Fetches first name once after component loads
   useEffect(() => {
-    fetch(`http://localhost:8000/users/${session.user.id}`)
+    fetch(`${import.meta.env.VITE_API_URL}/users/${session.user.id}`)
       .then(res => res.json())
       .then(data => setFirstName(data[0].first_name))
   }, [])
@@ -131,14 +131,14 @@ function MarketplacePage({ session }) {
   // Fetches all listings from backend
   const fetchListings = () => {
     setIsLoading(true)
-    fetch(`http://localhost:8000/listings/`)
+    fetch(`${import.meta.env.VITE_API_URL}/listings/`)
       .then(res => res.json())
       .then(data => { setListings(data); setIsLoading(false) })
   }
 
   // Fetches user's wants from backend
   const fetchWants = () => {
-    fetch(`http://localhost:8000/wants/${session.user.id}`)
+    fetch(`${import.meta.env.VITE_API_URL}/wants/${session.user.id}`)
       .then(res => res.json())
       .then(data => setWants(data.map(row => row.textbook_id)))
   }

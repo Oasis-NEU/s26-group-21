@@ -96,7 +96,7 @@ function AddListingOverlay({ open, onClose, editListing, session, fetchListings 
       // POST request if editListing is null, meaning user is creating new listing
       try {
         // Post to API as JSON
-        const response = await fetch("http://localhost:8000/listings", {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/listings`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -119,7 +119,7 @@ function AddListingOverlay({ open, onClose, editListing, session, fetchListings 
     else {
       // PUT request if editListing is not null, meaning user is editing a pre-existing listing
       try {
-        const response = await fetch(`http://localhost:8000/listings/${editListing.textbook_id}`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/listings/${editListing.textbook_id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
