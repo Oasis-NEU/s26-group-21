@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import './navbar.css'
 
-function Navbar() {
+function Navbar({ firstName, lastName, session}) {
   const navigate = useNavigate()
 
   return (
@@ -13,6 +13,9 @@ function Navbar() {
         </span>
       </div>
       <div className="navbar-right">
+        {(firstName || lastName) && (
+          <span className="navbar-username">Hi, {firstName} {lastName}</span>
+        )}
         <button className="navbar-icon-btn" title="Settings" onClick={() => navigate('/settings')}>
           {/* placeholder: replace with settings icon image */}
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
