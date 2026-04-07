@@ -145,7 +145,7 @@ function Settings({ session }) {
 
     return (
         <>
-            <Navbar />
+            <Navbar firstName={firstName} lastName={lastName} session={session} />
             <div className="settings-page">
                 <h1 className="settings-title">Settings</h1>
                 <p className="settings-subtitle">Manage your account</p>
@@ -213,19 +213,33 @@ function Settings({ session }) {
                                 <label className="settings-modal-label">First Name</label>
                                 <input
                                     className="settings-modal-input"
-                                    value={draftFirst}
-                                    onChange={(e) => setDraftFirst(e.target.value)}
-                                    autoFocus
+                                    type={showNewPassword ? "text" : "password"}
+                                    value={newPasswrod}
+                                    onChange={(e) => setNewPassword(e.target.value)}
                                 />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowNewPassword(!showNewPassword)}
+                                    className="settings-toggle-btn"
+                                    >
+                                        {showNewPassword ? "Hide" : "Show"}
+                                    </button>
                             </div>
                             <div className="settings-modal-field">
                                 <label className="settings-modal-label">Last Name</label>
                                 <input
                                     className="settings-modal-input"
-                                    value={draftLast}
-                                    onChange={(e) => setDraftLast(e.target.value)}
-                                    autoFocus
+                                    type={showConfirmPassword ? "text" : "password"}
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
                                 />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                    className="settings-toggle-btn"
+                                >
+                                    {showConfirmPassword ? "Hide" : "Show"}
+                                </button>
                             </div>
                         </div>
                         <div className="settings-modal-actions">
@@ -254,7 +268,7 @@ function Settings({ session }) {
                                 <button
                                     type="button"
                                     onClick={() => setShowCurrentPassword(!showCurrentPassword)}
-                                    classNae="settings-toggle-btn"
+                                    className="settings-toggle-btn"
                                     >
                                         {showCurrentPassword ? "Hide" : "Show"}
                                     </button>

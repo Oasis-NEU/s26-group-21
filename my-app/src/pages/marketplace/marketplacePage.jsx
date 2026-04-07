@@ -194,7 +194,7 @@ function MarketplacePage({ session }) {
 
   return (
     <>
-      <Navbar />
+      <Navbar firstName={firstName} lastName={lastName} session={session} />
       <main className="marketplace">
         <section className="marketplace-hero">
           <h1>Welcome to the Marketplace, <span className="marketplace-hero-look">{firstName}</span></h1>
