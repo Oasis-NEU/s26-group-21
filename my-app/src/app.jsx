@@ -60,7 +60,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/settings" element={
           <ProtectedRoute session={session}>
-            <Settings />
+            <Settings session={session} />
           </ProtectedRoute>
         } />
       </Routes>
