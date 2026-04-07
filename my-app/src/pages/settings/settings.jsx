@@ -28,7 +28,7 @@ function Settings({ session }) {
 
     // Fetches first name, last name, and email once after component loads
     useEffect(() => {
-        fetch(`http://localhost:8000/users/${session.user.id}`)
+        fetch(`${import.meta.env.VITE_API_URL}/users/${session.user.id}`)
             .then(res => res.json())
             .then(data => {
                 setFirstName(data[0].first_name);
@@ -43,7 +43,7 @@ function Settings({ session }) {
         try {
             let newFirst = draftFirst || firstName // Handling if user enters '' for first name
             let newLast = draftLast || lastName // Handling if user enters '' for last name
-            const response = await fetch(`http://localhost:8000/users/${session.user.id}`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/users/${session.user.id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -85,7 +85,7 @@ function Settings({ session }) {
         )) {
             // DELETE to API as JSON
             try {
-                const response = await fetch(`http://localhost:8000/users/${session.user.id}`, {
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/users/${session.user.id}`, {
                     method: "DELETE",
                     headers: { "Content-Type": "application/json" }
                 })
