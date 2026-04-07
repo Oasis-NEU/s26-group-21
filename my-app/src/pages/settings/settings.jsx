@@ -7,6 +7,7 @@ import './settings.css'
 
 function Settings({ session }) {
     const navigate = useNavigate()
+    const containsAlphabeticalCharacter = /[A-Za-z]/
 
     const [draftEmail, setDraftEmail] = useState('') // What user types for changing email
     const [email, setEmail] = useState('') // Setting email to new email
@@ -17,6 +18,7 @@ function Settings({ session }) {
     const [editingName, setEditingName] = useState(false) // Whether editing input is shown for names
     const [draftFirst, setDraftFirst] = useState('') // What user types for editing first name
     const [draftLast, setDraftLast] = useState('') // What user types for editing last name
+    const [nameError, setNameError] = useState('')
 
     const [editingPassword, setEditingPassword] = useState(false)
     const [currentPassword, setCurrentPassword] = useState('')
@@ -38,11 +40,9 @@ function Settings({ session }) {
     }, [])
 
     // Sends PUT fetch for user to update name
-    async function onEditName(session) {
+    async function onEditName(session, newFirst, newLast) {
         // PUT to API as JSON
         try {
-            let newFirst = draftFirst || firstName // Handling if user enters '' for first name
-            let newLast = draftLast || lastName // Handling if user enters '' for last name
             const response = await fetch(`${import.meta.env.VITE_API_URL}/users/${session.user.id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
@@ -54,13 +54,14 @@ function Settings({ session }) {
             })
             // response.ok is true if server returns 200 success code
             if (!response.ok) {
-                setError("Failed to change name.")
-                return
+                setNameError("Failed to change name.")
+                return false
             }
+            return true
         } catch {
             // If fetch fails entirely due to no response from backend
-            setError("Network error. Please check your connection and try again.")
-            return
+            setNameError("Network error. Please check your connection and try again.")
+            return false
         }
     }
 
@@ -107,14 +108,35 @@ function Settings({ session }) {
     function openNameModal() {
         setDraftFirst(firstName)
         setDraftLast(lastName)
+        setNameError('')
         setEditingName(true)
     }
 
-    function saveNameModal() {
-        setFirstName(draftFirst)
-        setLastName(draftLast)
+    async function saveNameModal() {
+        const nextFirst = draftFirst.trim()
+        const nextLast = draftLast.trim()
+
+        if (!containsAlphabeticalCharacter.test(nextFirst)) {
+            setNameError("Please enter your first name.")
+            return
+        }
+
+        if (!containsAlphabeticalCharacter.test(nextLast)) {
+            setNameError("Please enter your last name.")
+            return
+        }
+
+        const saveSucceeded = await onEditName(session, nextFirst, nextLast)
+        if (!saveSucceeded) {
+            return
+        }
+
+        setFirstName(nextFirst)
+        setLastName(nextLast)
+        setDraftFirst(nextFirst)
+        setDraftLast(nextLast)
+        setNameError('')
         setEditingName(false)
-        onEditName(session)
     }
 
     function openPasswordModal() {
@@ -202,9 +224,22 @@ function Settings({ session }) {
 
             {/* Name edit modal */}
             {editingName && (
-                <div className="settings-modal-backdrop" onClick={() => setEditingName(false)}>
+                <div className="settings-modal-backdrop" onClick={() => { setNameError(''); setEditingName(false) }}>
                     <div className="settings-modal" onClick={(e) => e.stopPropagation()}>
                         <h2 className="settings-modal-title">Edit Name</h2>
+                        {nameError && (
+                            <div className="settings-modal-error" role="alert" aria-live="polite">
+                                <span>{nameError}</span>
+                                <button
+                                    type="button"
+                                    className="settings-modal-error-close"
+                                    aria-label="Dismiss name error"
+                                    onClick={() => setNameError('')}
+                                >
+                                    x
+                                </button>
+                            </div>
+                        )}
                         <div className="settings-modal-fields">
                             <div className="settings-modal-field">
                                 <label className="settings-modal-label">First Name</label>
@@ -226,8 +261,8 @@ function Settings({ session }) {
                             </div>
                         </div>
                         <div className="settings-modal-actions">
-                            <button className="settings-modal-btn settings-modal-btn--cancel" onClick={() => setEditingName(false)}>Cancel</button>
-                            <button className="settings-modal-btn settings-modal-btn--save" onClick={() => { saveNameModal(session) }}>Save</button>
+                            <button className="settings-modal-btn settings-modal-btn--cancel" onClick={() => { setNameError(''); setEditingName(false) }}>Cancel</button>
+                            <button className="settings-modal-btn settings-modal-btn--save" onClick={saveNameModal}>Save</button>
                         </div>
                     </div>
                 </div>
