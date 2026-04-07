@@ -327,3 +327,14 @@
     background-color: #eee;
     margin: 6px 0;
 }
+
+/*toggle password*/ 
+.settings-toggle-btn {
+    background: none;
+    border: none;
+    color: #cc0000;
+    font-size: 13px;
+    cursor: pointer;
+    padding: 0;
+    margin-top: 4px;
+}

@@ -27,6 +27,9 @@ function Settings({ session }) {
 
     const [error, setError] = useState('')
 
+    const [showCurrentPassword, setShowCurrentPassword] = useState(false)
+    const [showNewPassword, setShowNewPassword] = useState(false)
+    const[showConfirmPassword, setShowConfirmPassword] = useState(false)
 
     // Fetches first name, last name, and email once after component loads
     useEffect(() => {
@@ -278,11 +281,18 @@ function Settings({ session }) {
                                 <label className="settings-modal-label">Current Password</label>
                                 <input
                                     className="settings-modal-input"
-                                    type="password"
+                                    type={showCurrentPassword ? "text" : "password"}
                                     value={currentPassword}
                                     onChange={(e) => setCurrentPassword(e.target.value)}
                                     autoFocus
                                 />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowCurrentPassword(!showCurrentPassword)}
+                                    classNae="settings-toggle-btn"
+                                    >
+                                        {showCurrentPassword ? "Hide" : "Show"}
+                                    </button>
                             </div>
                             <div className="settings-modal-field">
                                 <label className="settings-modal-label">New Password</label>
