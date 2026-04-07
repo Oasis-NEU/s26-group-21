@@ -7,12 +7,11 @@ The prefix "/users" is set in main.py, so we don't repeat it here
 '''
 
 from fastapi import APIRouter
-from database import supabase  # import the shared Supabase client
+from database import supabase, supabase_service  # import the shared Supabase clients
 from models import User        # import the User data model
 
 # APIRouter works like FastAPI() but for a section of the app
 router = APIRouter()
-
 
 @router.get("/")
 async def get_users():
@@ -25,6 +24,19 @@ async def get_users():
         .execute()
     )
     return response.data
+
+@router.get("/email/{user_id}")
+async def get_email(user_id: str):
+    '''
+    Fetch a user's email by their unique user_id
+
+    Params:
+        user_id (str): the UUID of the user
+    '''
+    response = (
+        supabase_service.auth.admin.get_user_by_id(user_id)
+    )
+    return {"email": response.user.email}
 
 @router.get("/{user_id}")
 async def get_specific_user(user_id: str):

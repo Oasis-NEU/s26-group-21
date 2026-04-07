@@ -81,7 +81,8 @@ function MarketplacePage({ session }) {
   // Sends DELETE fetch for user to remove a listing
   async function onDeleteListing(textbook_id) {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/listings/${textbook_id}`, {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/listings/${textbook_id}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" }
       })

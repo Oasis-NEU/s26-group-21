@@ -15,5 +15,11 @@ load_dotenv()
 DB_URL: str = os.getenv("SUPABASE_URL", "")
 DB_KEY: str = os.getenv("SUPABASE_KEY", "")
 
+# Read the service key from environment variable
+DB_SERVICE_KEY: str = os.getenv("SUPABASE_SERVICE_KEY", "")
+
 # Create the Supabase client
 supabase: Client = create_client(DB_URL, DB_KEY)
+
+# Create the Supabase service client
+supabase_service: Client = create_client(DB_URL, DB_SERVICE_KEY)
