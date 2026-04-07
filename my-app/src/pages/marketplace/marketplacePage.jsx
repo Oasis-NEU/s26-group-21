@@ -100,7 +100,7 @@ function MarketplacePage({ session }) {
 
   // Sends PUT fetch for user to edit a listing
   async function onEditListing(item) { setEditListing(item) }
-  
+
   // Fetches listings once after component loads
   useEffect(() => {
     fetchListings()

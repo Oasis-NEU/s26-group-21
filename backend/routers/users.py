@@ -58,6 +58,22 @@ async def delete_user(user_id: str):
     )
     return response.data
 
+@router.put("/{user_id}")
+async def edit_names(user_id: str, user: User):
+    '''
+    Updates the existing first and last name of a user their unique user_id
+
+    Params:
+        user_id (str): the UUID of the user row in Supabase
+    '''
+    response = (
+        supabase.table("users")
+        .update(user.model_dump())
+        .eq("user_id", user_id)
+        .execute()
+    )
+    return response.data
+
 @router.post("/")
 async def add_user(user: User):
     '''
