@@ -6,7 +6,7 @@
 
 /* Navbar */
 .navbar {
-  position: sticky;
+  position: fixed;
   top: 0;
   z-index: 100;
   width: 100%;
@@ -57,6 +57,15 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+.navbar-username {
+  font-size: 17px;
+  font-weight: 500;
+  color: #ffffff;
+  flex: 1;
+  overflow: hidden;
+  margin: 0 4px;
 }
 
 .navbar-icon-btn {

@@ -1,8 +1,19 @@
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './navbar.css'
 
-function Navbar({ firstName, lastName, session}) {
+function Navbar({ session }) {
   const navigate = useNavigate()
+
+  const [firstName, setFirstName] = useState('') // For displaying user's first name
+  const [lastName, setLastName] = useState('') // For displaying user's last name
+
+  // Fetches user's name once after component loads
+    useEffect(() => {
+      fetch(`${import.meta.env.VITE_API_URL}/users/${session.user.id}`)
+        .then(res => res.json())
+        .then(data => { setFirstName(data[0].first_name); setLastName(data[0].last_name) } )
+    }, [])
 
   return (
     <nav className="navbar">
@@ -14,7 +25,7 @@ function Navbar({ firstName, lastName, session}) {
       </div>
       <div className="navbar-right">
         {(firstName || lastName) && (
-          <span className="navbar-username">Hi, {firstName} {lastName}</span>
+          <span className="navbar-username">{firstName} {lastName}</span>
         )}
         <button className="navbar-icon-btn" title="Settings" onClick={() => navigate('/settings')}>
           {/* placeholder: replace with settings icon image */}
