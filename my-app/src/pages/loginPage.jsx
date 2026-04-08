@@ -1,180 +1,222 @@
-// creating React component (reusable piece of UI)
-// export makes it available to be imported by other files
+/**
+ * @fileoverview Handles user sign in and sign up to ensure all correct information is entered.
+ * User must correctly enter name, email, password to be given access to app.
+ * Form changes based on whether user is signing in or up.
+ */
+
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import logo from "../assets/NU_RGB_seal_R.png"
+import { supabase } from '../../supabase'
+import "./login.css"
 
 export default function LoginPage() {
-    const [email, setEmail] = useState("")
+    const [isSignUp, setIsSignUp] = useState(false) // Setting user signed up as false
+    const [email, setEmail] = useState("") // Setting email to empty string
+    // Setting password and password confirmation as empty strings
     const [password, setPassword] = useState("")
-    const [rememberMe, setRememberMe] = useState(false)
-    const [error, setError] = useState("")
-    const [showPassword, setShowPassword] = useState(false)
+    const [confirmPassword, setConfirmPassword] = useState("")
+    const [showPassword, setShowPassword] = useState(false) // If user wants to see password while they type
 
-    const navigate = useNavigate()
+    const [firstName, setFirstName] = useState("") // Setting first name to empty string
+    const [lastName, setLastName] = useState("") // Setting last name to empty string
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
+    const [error, setError] = useState("") // Setting error for signing in to empty string
+    const [isLoading, setIsLoading] = useState(false)
 
-        if (!email.endsWith("@northeastern.edu")){
-            setError("Please enter your @northeastern.edu email.")
+    const navigate = useNavigate() // How different components will result in navigating app
+
+    // Handling the submission of email and password
+    const handleSubmit = async (e) => {
+        e.preventDefault() // Preventing full browser reload to allow for own logic
+        setError("") // Clearing previous errors
+        setIsLoading(true)
+
+        // Handling errors for signing in to app
+
+        if (!email.endsWith("@northeastern.edu")) {
+            setError("Please use your @northeastern.edu email.")
             return
         }
 
-        if (password === ""){
-            setError("Please enter your password")
+        if (password === "") {
+            setError("Please enter your password.")
             return
         }
-        navigate("/marketplace")
+
+        // If user is singing up for app, not singing *in*
+        if (isSignUp) {
+            // Error handling for during sign in
+            if (firstName.trim() === "") {
+                setError("Please enter your first name.")
+                return
+            }
+            if (lastName.trim() === "") {
+                setError("Please enter your last name.")
+                return
+            }
+            if (password !== confirmPassword) {
+                setError("Passwords do not match.")
+                return
+            }
+            // Determining if user was succesfully added to supabase
+            const { data, error } = await supabase.auth.signUp({ email, password })
+
+            // Error checking from supabase
+            if (error) {
+                setError(error.message + ".")
+                return
+            }
+
+            try {
+                // POST to API as JSON
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/users`, {
+                    method: "POST",
+                    headers: { "Content-Type" : "application/json" },
+                    body: JSON.stringify({
+                        user_id: data.user.id,
+                        first_name: firstName,
+                        last_name: lastName
+                    })
+                })
+                // response.ok is true if server returns 200 success code
+                if (!response.ok) {
+                    setError("Failed to create user profile.")
+                    return
+                }
+            } catch {
+                // If fetch fails entirely due to no response from backend
+                setError("Network error. Please check your connection and try again.")
+                return
+            }
+        }
+        else {
+            const { error } = await supabase.auth.signInWithPassword({ email, password })
+
+            if (error) {
+                setError(error.message + ".")
+                return
+            }
+        }
+        navigate("/marketplace") // Navgating to marketplace once there are no errors
+        setIsLoading(false)
+    }
+
+    // Called when user clicks between sign in/up
+    // Resets form when switching between the two modes
+    const switchMode = () => {
+        setIsSignUp(!isSignUp)
+        setError("")
+        setFirstName("")
+        setLastName("")
+        setPassword("")
+        setConfirmPassword("")
     }
 
     return (
-        <div style={styles.page}>
-            <div style={styles.card}>
-                <img src={logo} alt="Northeastern University Logo" style={styles.logo} />
-                <h2 style={styles.title}>Northeastern Marketplace</h2>
+        <div className="login-page">
+            <div className="login-logo-placeholder" /> {/* Placeholder for logo once created */}
+            <h1 className="login-brand">Text<span className="login-brand-look">Look</span></h1> {/* Title/Brand */}
+            <p className="login-subtitle">Because knowledge shouldn't be hard to find.</p>
+            <p className="login-tagline">Made in Oasis @ Northeastern</p>
+            <div className="login-card">
+                <div className="login-tabs" style={{ "--tab-offset": isSignUp ? "1" : "0" }}>
+                    <div className="tab-slider" />
+                    {/* Switching between sign in/up */}
 
-                {error && <p style={styles.error}>{error}</p>}
+                    {/* Gets active when signing in */}
+                    <button
+                        className={`tab-btn ${!isSignUp ? "active" : ""}`}
+                        onClick={() => !isSignUp || switchMode()}
+                        type="button"
+                    >
+                        Sign In
+                    </button>
+                    {/* Gets active when signing up */}
+                    <button
+                        className={`tab-btn ${isSignUp ? "active" : ""}`}
+                        onClick={() => isSignUp || switchMode()}
+                        type="button"
+                    >
+                        Sign Up
+                    </button>
+                </div>
 
-                <form onSubmit={handleSubmit} style={styles.form}>
+                {/* When error has a value, displays on screen */}
+                {error && <p className="login-error">{error}</p>}
+
+                {/* Runs all logic when user clicks button on login */}
+                <form onSubmit={handleSubmit} className="login-form">
+                    {/* Renders first and last name entry on sign up form */}
+                    {isSignUp && (
+                        <div className="login-name-row">
+                            <input
+                                type="text"
+                                placeholder="First Name"
+                                value={firstName} // Binds input's displayed value to firstName state variable
+                                onChange={(e) => setFirstName(e.target.value)} // Updates state variable on every keystroke
+                                className="login-input"
+                            />
+                            <input
+                                type="text"
+                                placeholder="Last Name"
+                                value={lastName} // Binds input's displayed value to lastName state variable
+                                onChange={(e) => setLastName(e.target.value)} // Updates state variable on every keystroke
+                                className="login-input"
+                            />
+                        </div>
+                    )}
+                    {/* Display of sign in */}
                     <input
-                        type="email"
+                        type="email" // Gives basic browser-level email format before handleSubmit runs
                         placeholder="Northeastern Email (@northeastern.edu)"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        style={styles.input}
+                        value={email} // Binds input's displayed value to email state variable
+                        onChange={(e) => setEmail(e.target.value)} // Updates state variable on every keystroke
+                        className="login-input"
                     />
                     <input
-                        type={showPassword ? "text" : "password"}
+                        type={showPassword ? "text" : "password"} // Masks characters when typing
                         placeholder="Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        style={styles.input}
+                        value={password} // Binds input's value to password state variable
+                        onChange={(e) => setPassword(e.target.value)} // Updates state variable on every keystroke
+                        className="login-input"
                     />
                     <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        style={styles.toggleButton}
                     >
-                        {showPassword ? "Hide Password" : "Show Password"}
+                        {showPassword ? "Hide" : "Show"}
                     </button>
-                    <div style={styles.checkboxRow}>
+                    {/* Renders confirmation of password on sign up */}
+                    {isSignUp && (
                         <input
-                            type="checkbox"
-                            id="rememberMe"
-                            checked={rememberMe}
-                            onChange={(e) => setRememberMe(e.target.checked)}
+                            type={showPassword ? "text" : "password"} // Masks characters when typing
+                            placeholder="Confirm Password"
+                            value={confirmPassword} // Binds input's value to confirmPassword state variable
+                            onChange={(e) => setConfirmPassword(e.target.value)} // Update state variable on every keystroke
+                            className="login-input"
                         />
-                        <label htmlFor="rememberMe" style={styles.checkboxLabel}>Remember Me</label>
-                    </div>
-                    <button type="submit" style={styles.button}>Sign In</button>
-                    <a href="/forgot-password" style={styles.link}>Forgot Password?</a>
+                    )}
+
+                    {/* If on sign in, renders forgot password link */}
+                    {!isSignUp && (
+                        <a href="/forgot-password" className="login-forgot">Forgot Password?</a>
+                    )}
+
+                    {/* Depending on form, changes button to access marketplace */}
+                    <button type="submit" className="login-btn" disabled={isLoading}>
+                        {isLoading ? <span className="login-spinner" /> : (isSignUp ? "Create Account" : "Sign In")}
+                    </button>
                 </form>
+
+                {/* Depending on form, renders sign in/up link */}
+                <p className="login-switch">
+                    {isSignUp ? "Already have an account? " : "Don't have an account? "}
+                    <span className="login-switch-link" onClick={switchMode}> {/* Resets form */}
+                        {isSignUp ? "Sign In" : "Sign Up"}
+                    </span>
+                </p>
             </div>
         </div>
     )
-}
-
-const styles = {
-    page: {
-        minHeight: "100vh",
-        backgroundColor: "#1a1a1a",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-    },
-    card: {
-        backgroundColor: "#2a2a2a",
-        padding: "60px",
-        borderRadius: "12px",
-        width: "100%",
-        maxWidth: "480px",
-        borderTop: "4px solid #cc0000",
-        boxShadow: "0 0 30px rgba(204, 0, 0, 0.3)",
-    },
-    title: {
-        color: "#cc0000",
-        textAlign: "center",
-        marginBottom: "6px",
-    },
-    subtitle: {
-        color: "#aaaaaa",
-        textAlign: "center",
-        marginBottom: "20px",
-        fontSize: "28px",
-        fontFamily: "Georgia, serif",
-        letterSpacing: "1px",
-    },
-    form: {
-        display: "flex",
-        flexDirection: "column",
-        gap: "20px",
-    },
-    input: {
-        padding: "12px",
-        borderRadius: "8px",
-        border: "1px solid #444",
-        backgroundColor: "#1a1a1a",
-        color: "white",
-        fontSize: "14px",
-        outline: "none",
-    },
-    checkboxRow: {
-        display: "flex",
-        alignItems: "center",
-        gap: "8px",
-    },
-    checkboxLabel: {
-        color: "#aaaaaa",
-        fontSize: "14px",
-    },
-    button: {
-        padding: "12px",
-        backgroundColor: "#cc0000",
-        color: "white",
-        border: "none",
-        borderRadius: "8px",
-        fontSize: "16px",
-        cursor: "pointer",
-    },
-    toggleButton: {
-        background: "none",
-        border: "none",
-        color: "#cc0000",
-        fontSize: "13px",
-        cursor: "pointer",
-        textAlign: "left",
-        padding: "0",
-    },
-    link: {
-        color: "#cc0000",
-        textAlign: "center",
-        fontSize: "14px",
-    },
-    error: {
-        color: "#ff4444",
-        backgroundColor: "#3a1a1a",
-        padding: "10px",
-        borderRadius: "8px",
-        fontSize: "14px",
-        textAlign: "center",
-    },
-    logo: {
-        width: "120px",
-        height: "120px",
-        objectFit: "contain",
-        display: "block",
-        margin: "0 auto 16px auto",
-    },
-    signupText: {
-        color: "#aaaaaa",
-        textAlign: "center",
-        fontSize: "14px",
-        margin: "0",
-    },
-    signupLink: {
-        color: "#cc0000",
-        textDecoration: "none",
-    },
 }
 

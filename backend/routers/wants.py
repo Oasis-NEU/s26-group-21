@@ -14,7 +14,7 @@ from models import Want        # import the Want data model
 router = APIRouter()
 
 @router.get('/{user_id}')
-async def get_wants(user_id: str):
+async def get_wants(user_id: str) -> list[dict]:
     '''
     Fetch all textbooks that user has under 'wants' from database
     
@@ -31,7 +31,7 @@ async def get_wants(user_id: str):
     return response.data
 
 @router.delete('/{textbook_id}')
-async def remove_want(textbook_id: str):
+async def remove_want(textbook_id: str) -> list[dict]:
     '''
     Remove a textbook from a user's wants
 
@@ -47,7 +47,7 @@ async def remove_want(textbook_id: str):
     return response.data
 
 @router.post('/')
-async def add_want(want: Want):
+async def add_want(want: Want) -> list[dict]:
     '''
     Add a wanted textbook to 'wants' in database
 
