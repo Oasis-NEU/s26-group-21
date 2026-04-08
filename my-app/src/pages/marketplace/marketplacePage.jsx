@@ -24,6 +24,9 @@ function MarketplacePage({ session }) {
   const [listings, setListings] = useState([]) // setting the listings through database
   const [wants, setWants] = useState([]) // setting user wants through database
 
+  const [firstName, setFirstName] = useState('') // For displaying user's first name
+  const [lastName, setLastName] = useState('') // For displaying user's last name
+
   const [error, setError] = useState('') // setting error to be displayed as banner
   const [isLoading, setIsLoading] = useState(true) // loading listings on marketplace for UI
 
@@ -100,6 +103,13 @@ function MarketplacePage({ session }) {
 
   // Sends PUT fetch for user to edit a listing
   async function onEditListing(item) { setEditListing(item) }
+
+  // Fetches user's name once after component loads
+    useEffect(() => {
+      fetch(`${import.meta.env.VITE_API_URL}/users/${session.user.id}`)
+        .then(res => res.json())
+        .then(data => { setFirstName(data[0].first_name); setLastName(data[0].last_name) } )
+    }, [])
 
   // Fetches listings once after component loads
   useEffect(() => {
@@ -187,7 +197,7 @@ function MarketplacePage({ session }) {
 
   return (
     <>
-      <Navbar session={session} />
+      <Navbar firstName={firstName} lastName={lastName} session={session} />
       <main className="marketplace">
         <section className="marketplace-hero">
           <h1>Welcome to the Marketplace<span className="marketplace-hero-look"></span></h1>

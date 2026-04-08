@@ -29,7 +29,7 @@ function Settings({ session }) {
 
     const [showCurrentPassword, setShowCurrentPassword] = useState(false)
     const [showNewPassword, setShowNewPassword] = useState(false)
-    const[showConfirmPassword, setShowConfirmPassword] = useState(false)
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
     // Fetches first name, last name, and email once after component loads
     useEffect(() => {
@@ -167,7 +167,7 @@ function Settings({ session }) {
 
     return (
         <>
-            <Navbar firstName={firstName} lastName={lastName} session={session} />
+            <Navbar firstName ={firstName} lastName={lastName} session={session} />
             <div className="settings-page">
                 <h1 className="settings-title">Settings</h1>
                 <p className="settings-subtitle">Manage your account</p>
@@ -248,17 +248,16 @@ function Settings({ session }) {
                                 <label className="settings-modal-label">First Name</label>
                                 <input
                                     className="settings-modal-input"
-                                    type="text"
+                                    type={"text"}
                                     value={draftFirst}
                                     onChange={(e) => setDraftFirst(e.target.value)}
-                                    autoFocus
                                 />
                             </div>
                             <div className="settings-modal-field">
                                 <label className="settings-modal-label">Last Name</label>
                                 <input
                                     className="settings-modal-input"
-                                    type="text"
+                                    type={"text"}
                                     value={draftLast}
                                     onChange={(e) => setDraftLast(e.target.value)}
                                 />

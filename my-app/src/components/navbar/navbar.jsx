@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router-dom'
 import './navbar.css'
 
-function Navbar({ firstName, lastName, session}) {
+function Navbar({ firstName, lastName, session }) {
   const navigate = useNavigate()
-
+  
   return (
     <nav className="navbar">
       <div className="navbar-left">
