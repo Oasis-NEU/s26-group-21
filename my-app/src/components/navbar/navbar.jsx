@@ -2,19 +2,9 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './navbar.css'
 
-function Navbar({ session }) {
+function Navbar({ firstName, lastName, session }) {
   const navigate = useNavigate()
-
-  const [firstName, setFirstName] = useState('') // For displaying user's first name
-  const [lastName, setLastName] = useState('') // For displaying user's last name
-
-  // Fetches user's name once after component loads
-    useEffect(() => {
-      fetch(`${import.meta.env.VITE_API_URL}/users/${session.user.id}`)
-        .then(res => res.json())
-        .then(data => { setFirstName(data[0].first_name); setLastName(data[0].last_name) } )
-    }, [])
-
+  
   return (
     <nav className="navbar">
       <div className="navbar-left">
