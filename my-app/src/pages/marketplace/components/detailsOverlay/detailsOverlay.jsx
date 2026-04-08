@@ -1,14 +1,43 @@
+import { useState } from 'react'
+
 import './detailsOverlay.css'
 
 function DetailsOverlay({ item, onClose, wants, onToggleWant, onDeleteListing, onEditListing, session }) {
-  
+  const [error, setError] = useState('')
+
   if (!item) return null
 
   const mailtoHref = `mailto:${item.sellerEmail}?subject=${encodeURIComponent(
     `Interested in "${item.title}" textbook`,
   )}&body=${encodeURIComponent(
-    `Hi,\n\nI'm interested in your listing for "${item.title}" on the TextLook.\n\nIs it still available?\n\nThanks,\n`,
+    `Hi,\n\nI'm interested in your listing for "${item.title}" on TextLook.\n\nIs it still available?\n\nThanks!`,
   )}`
+
+  // Sends GET fetch for a user's email for contact between users
+  async function onContactSeller(item) {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/users/email/${item.user_id}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" }
+      })
+      // response.ok is true if server returns 200 success code
+      if (!response.ok) {
+        setError("Could not contact seller.")
+        return
+      }
+      const data = await response.json()
+      const mailtoHref = `mailto:${data.email}?subject=${encodeURIComponent(
+        `Interested in "${item.title}" textbook`,
+      )}&body=${encodeURIComponent(
+        `Hi,\n\nI'm interested in your listing for "${item.title}" on TextLook.\n\nIs it still available?\n\nThanks,\n`,
+      )}`
+      window.location.href = mailtoHref
+    } catch {
+      // If fetch fails entirely due to no response from backend
+      setError("Network error. Please check your connection and try again.")
+      return
+    }
+  }
 
   return (
     <div className="detailsOverlay">
@@ -73,9 +102,11 @@ function DetailsOverlay({ item, onClose, wants, onToggleWant, onDeleteListing, o
                 onDeleteListing(item.textbook_id)
                 onClose()
               }}>Delete Listing</button> :
-            <a href={mailtoHref} className="detailsOverlay-primary">
+            <button
+              className="detailsOverlay-primary"
+              onClick={() => onContactSeller(item)}>
               Contact seller
-            </a>
+            </button>
           }
         </div>
       </div>

@@ -21,7 +21,6 @@ function MarketplacePage({ session }) {
   const [selectedItem, setSelectedItem] = useState(null) // for selecting listing to see details
   const [activeView, setActiveView] = useState('all') // to put listing into overlay
   const [showAddListing, setShowAddListing] = useState(false) // to determine if add listing FAB was clicked
-  const [firstName, setFirstName] = useState('') // for displaying user's first name
   const [listings, setListings] = useState([]) // setting the listings through database
   const [wants, setWants] = useState([]) // setting user wants through database
 
@@ -81,7 +80,8 @@ function MarketplacePage({ session }) {
   // Sends DELETE fetch for user to remove a listing
   async function onDeleteListing(textbook_id) {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/listings/${textbook_id}`, {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/listings/${textbook_id}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" }
       })
@@ -104,13 +104,6 @@ function MarketplacePage({ session }) {
   // Fetches listings once after component loads
   useEffect(() => {
     fetchListings()
-  }, [])
-
-  // Fetches first name once after component loads
-  useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/users/${session.user.id}`)
-      .then(res => res.json())
-      .then(data => setFirstName(data[0].first_name))
   }, [])
 
   // Fetches wants once after component loads
@@ -194,10 +187,10 @@ function MarketplacePage({ session }) {
 
   return (
     <>
-      <Navbar firstName={firstName} lastName={lastName} session={session} />
+      <Navbar session={session} />
       <main className="marketplace">
         <section className="marketplace-hero">
-          <h1>Welcome to the Marketplace, <span className="marketplace-hero-look">{firstName}</span></h1>
+          <h1>Welcome to the Marketplace<span className="marketplace-hero-look"></span></h1>
           <p className="marketplace-subtitle">
             Buy and sell textbooks directly with other Huskies.
           </p>
