@@ -105,11 +105,11 @@ function MarketplacePage({ session }) {
   async function onEditListing(item) { setEditListing(item) }
 
   // Fetches user's name once after component loads
-    useEffect(() => {
-      fetch(`${import.meta.env.VITE_API_URL}/users/${session.user.id}`)
-        .then(res => res.json())
-        .then(data => { setFirstName(data[0].first_name); setLastName(data[0].last_name) } )
-    }, [])
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_API_URL}/users/${session.user.id}`)
+      .then(res => res.json())
+      .then(data => { setFirstName(data[0].first_name); setLastName(data[0].last_name) })
+  }, [])
 
   // Fetches listings once after component loads
   useEffect(() => {
@@ -210,7 +210,8 @@ function MarketplacePage({ session }) {
           <div
             id="temp-banner"
             className="marketplace-banner"
-          > {error}
+          >
+            {error}
           </div>
         }
 
