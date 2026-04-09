@@ -14,7 +14,7 @@ function Navbar({ firstName, lastName, session }) {
       </div>
       <div className="navbar-right">
         {(firstName || lastName) && (
-          <span className="navbar-username">Hi, {firstName} {lastName}</span>
+          <span className="navbar-username">{firstName} {lastName}</span>
         )}
         <button className="navbar-icon-btn" title="Settings" onClick={() => navigate('/settings')}>
           {/* placeholder: replace with settings icon image */}

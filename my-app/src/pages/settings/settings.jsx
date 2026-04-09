@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../../components/navbar/navbar.jsx'
 import { supabase } from '../../supabase'
-
+import eyeIcon from "../../assets/eye.svg"
+import eyeOffIcon from "../../assets/eye-off.svg"
 import './settings.css'
 
 function Settings({ session }) {
@@ -279,52 +280,58 @@ function Settings({ session }) {
                         <div className="settings-modal-fields">
                             <div className="settings-modal-field">
                                 <label className="settings-modal-label">Current Password</label>
-                                <input
-                                    className="settings-modal-input"
-                                    type={showCurrentPassword ? "text" : "password"}
-                                    value={currentPassword}
-                                    onChange={(e) => setCurrentPassword(e.target.value)}
-                                    autoFocus
-                                />
-                                <button
-                                    type="button"
-                                    onClick={() => setShowCurrentPassword(!showCurrentPassword)}
-                                    className="settings-toggle-btn"
-                                >
-                                    {showCurrentPassword ? "Hide" : "Show"}
-                                </button>
+                                <div className="settings-input-wrapper">
+                                    <input
+                                        className="settings-modal-input"
+                                        type={showCurrentPassword ? "text" : "password"}
+                                        value={currentPassword}
+                                        onChange={(e) => setCurrentPassword(e.target.value)}
+                                        autoFocus
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowCurrentPassword(!showCurrentPassword)}
+                                        className="settings-eye-btn"
+                                    >
+                                        <img src={showCurrentPassword ? eyeOffIcon : eyeIcon} alt="toggle password" width="18" height="18" />
+                                    </button>
+                                </div>
                             </div>
                             <div className="settings-modal-field">
-                            <label className="settings-modal-label">New Password</label>
-                                <input
-                                    className="settings-modal-input"
-                                    type={showNewPassword ? "text" : "password"}
-                                    value={newPassword}
-                                    onChange={(e) => setNewPassword(e.target.value)}
-                                />
-                                <button
-                                    type="button"
-                                    onClick={() => setShowNewPassword(!showNewPassword)}
-                                    className="settings-toggle-btn"
-                                >
-                                    {showNewPassword ? "Hide" : "Show"}
-                                </button>
+                                <label className="settings-modal-label">New Password</label>
+                                <div className="settings-input-wrapper">
+                                    <input
+                                        className="settings-modal-input"
+                                        type={showNewPassword ? "text" : "password"}
+                                        value={newPassword}
+                                        onChange={(e) => setNewPassword(e.target.value)}
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowNewPassword(!showNewPassword)}
+                                        className="settings-eye-btn"
+                                    >
+                                        <img src={showNewPassword ? eyeOffIcon : eyeIcon} alt="toggle password" width="18" height="18" />
+                                    </button>
+                                </div>
                             </div>
                             <div className="settings-modal-field">
                                 <label className="settings-modal-label">Confirm New Password</label>
-                                <input
-                                    className="settings-modal-input"
-                                    type={showConfirmPassword ? "text" : "password"}
-                                    value={confirmPassword}
-                                    onChange={(e) => setConfirmPassword(e.target.value)}
-                                />
-                                <button
-                                    type="button"
-                                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                                    className="settings-toggle-btn"
-                                >
-                                    {showConfirmPassword ? "Hide" : "Show"}
-                                </button>
+                                <div className="settings-input-wrapper">
+                                    <input
+                                        className="settings-modal-input"
+                                        type={showConfirmPassword ? "text" : "password"}
+                                        value={confirmPassword}
+                                        onChange={(e) => setConfirmPassword(e.target.value)}
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                        className="settings-eye-btn"
+                                    >
+                                        <img src={showConfirmPassword ? eyeOffIcon : eyeIcon} alt="toggle password" width="18" height="18" />
+                                    </button>
+                                </div>
                             </div>
                         </div>
                         <div className="settings-modal-actions">

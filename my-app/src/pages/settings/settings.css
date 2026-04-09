@@ -357,3 +357,31 @@
     opacity: 0.7;
     cursor: not-allowed;
 }
+
+.settings-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.settings-input-wrapper .settings-modal-input {
+    width: 100%;
+    padding-right: 40px;
+    box-sizing: border-box;
+}
+
+.settings-eye-btn {
+    position: absolute;
+    right: 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    opacity: 0.5;
+}
+
+.settings-eye-btn:hover {
+    opacity: 1;
+}

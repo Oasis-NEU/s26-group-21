@@ -220,3 +220,34 @@
 .login-switch-link:hover {
     text-decoration: underline;
 }
+
+.login-eye-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    opacity: 0.5;
+}
+
+.login-eye-btn:hover {
+    opacity: 1;
+}
+
+.login-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.login-input-wrapper .login-input {
+    width: 100%;
+    padding-right: 40px;
+    box-sizing: border-box;
+}
+
+.login-input-wrapper .login-eye-btn {
+    position: absolute;
+    right: 12px;
+}
