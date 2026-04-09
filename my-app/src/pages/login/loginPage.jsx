@@ -8,6 +8,8 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { supabase } from '../../supabase'
 import "./login.css"
+import eyeIcon from "../../assets/eye.svg"
+import eyeOffIcon from "../../assets/eye-off.svg"
 
 import logo from '../../assets/textlook_logo_red_transparent.png'
 
@@ -147,21 +149,21 @@ export default function LoginPage() {
                 <form onSubmit={handleSubmit} className="login-form">
                     {/* Renders first and last name entry on sign up form */}
                     {isSignUp && (
-                        <div className="login-name-row">
+                        <div className="login-input-wrapper">
                             <input
-                                type="text"
-                                placeholder="First Name"
-                                value={firstName} // Binds input's displayed value to firstName state variable
-                                onChange={(e) => setFirstName(e.target.value)} // Updates state variable on every keystroke
+                                type={showPassword ? "text" : "password"}
+                                placeholder="Confirm Password"
+                                value={confirmPassword}
+                                onChange={(e) => setConfirmPassword(e.target.value)}
                                 className="login-input"
                             />
-                            <input
-                                type="text"
-                                placeholder="Last Name"
-                                value={lastName} // Binds input's displayed value to lastName state variable
-                                onChange={(e) => setLastName(e.target.value)} // Updates state variable on every keystroke
-                                className="login-input"
-                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="login-eye-btn"
+                            >
+                                <img src={showPassword ? eyeOffIcon : eyeIcon} alt="toggle password" width="18" height="18" />
+                            </button>
                         </div>
                     )}
                     {/* Display of sign in */}
@@ -172,19 +174,22 @@ export default function LoginPage() {
                         onChange={(e) => setEmail(e.target.value)} // Updates state variable on every keystroke
                         className="login-input"
                     />
-                    <input
-                        type={showPassword ? "text" : "password"} // Masks characters when typing
-                        placeholder="Password"
-                        value={password} // Binds input's value to password state variable
-                        onChange={(e) => setPassword(e.target.value)} // Updates state variable on every keystroke
-                        className="login-input"
-                    />
-                    <button
-                        type="button"
-                        onClick={() => setShowPassword(!showPassword)}
-                    >
-                        {showPassword ? "Hide" : "Show"}
-                    </button>
+                    <div className="login-input-wrapper">
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            placeholder="Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            className="login-input"
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="login-eye-btn"
+                        >
+                            <img src={showPassword ? eyeOffIcon : eyeIcon} alt="toggle password" width="18" height="18" />
+                        </button>
+                    </div>
                     {/* Renders confirmation of password on sign up */}
                     {isSignUp && (
                         <input
