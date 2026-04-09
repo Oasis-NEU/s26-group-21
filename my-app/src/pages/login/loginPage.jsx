@@ -9,6 +9,8 @@ import { useNavigate } from "react-router-dom"
 import { supabase } from '../../supabase'
 import "./login.css"
 
+import logo from '../../assets/textlook_logo_red_transparent.png'
+
 export default function LoginPage() {
     const [isSignUp, setIsSignUp] = useState(false) // Setting user signed up as false
     const [email, setEmail] = useState("") // Setting email to empty string
@@ -111,7 +113,7 @@ export default function LoginPage() {
 
     return (
         <div className="login-page">
-            <div className="login-logo-placeholder" /> {/* Placeholder for logo once created */}
+            <img className="login-logo" src={logo} />
             <h1 className="login-brand">Text<span className="login-brand-look">Look</span></h1> {/* Title/Brand */}
             <p className="login-subtitle">Because knowledge shouldn't be hard to find.</p>
             <p className="login-tagline">Made in Oasis @ Northeastern</p>
