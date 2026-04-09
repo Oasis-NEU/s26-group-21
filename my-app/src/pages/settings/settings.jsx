@@ -39,6 +39,7 @@ function Settings({ session }) {
                 setFirstName(data[0].first_name);
                 setLastName(data[0].last_name);
             })
+            .catch(() => setError("Could not load user data."))
         setEmail(session.user.email)
     }, [])
 
@@ -167,7 +168,16 @@ function Settings({ session }) {
 
     return (
         <>
-            <Navbar firstName ={firstName} lastName={lastName} session={session} />
+            {error !== '' &&
+                <div
+                    id="temp-banner"
+                    className='settings-banner'
+                >
+                    {error}
+                </div>
+            }
+
+            <Navbar firstName={firstName} lastName={lastName} session={session} />
             <div className="settings-page">
                 <h1 className="settings-title">Settings</h1>
                 <p className="settings-subtitle">Manage your account</p>

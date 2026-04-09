@@ -66,20 +66,30 @@
 }
 
 @keyframes fadeInOut {
-  0% { 
+  0% {
     transform: translateY(-100%);
-    opacity: 0; }
-  10% { 
+    opacity: 0;
+  }
+
+  10% {
     transform: translateY(0);
-    opacity: 0.9; 
-    
-  }  /* Fades in quickly */
-  90% { 
+    opacity: 0.9;
+
+  }
+
+  /* Fades in quickly */
+  90% {
     transform: translateY(0);
-    opacity: 0.9; } /* Stays visible */
-  100% { 
+    opacity: 0.9;
+  }
+
+  /* Stays visible */
+  100% {
     transform: translateY(-100%);
-    opacity: 0; } /* Fades out at the end */
+    opacity: 0;
+  }
+
+  /* Fades out at the end */
 }
 
 .spinner-location {
