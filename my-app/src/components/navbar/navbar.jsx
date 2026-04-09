@@ -1,13 +1,15 @@
 import { useNavigate } from 'react-router-dom'
 import './navbar.css'
 
-function Navbar({ firstName, lastName, session }) {
+import logo from '../../assets/textlook_logo_white_transparent.png'
+
+function Navbar({ firstName, lastName }) {
   const navigate = useNavigate()
   
   return (
     <nav className="navbar">
       <div className="navbar-left">
-        <div className="navbar-logo-placeholder" />
+        <img className="navbar-logo" src={logo} />
         <span className="navbar-brand" onClick={() => navigate('/marketplace')} style={{ cursor: 'pointer' }}>
           Text<span className="navbar-brand-look">Look</span>
         </span>

@@ -27,12 +27,6 @@
     font-style: italic;
 }
 
-.login-logo-placeholder {
-    width: 80px;
-    height: 80px;
-    margin-bottom: 10px;
-}
-
 .login-subtitle {
     font-family: "Avenir", "Avenir Next", "Nunito", sans-serif;
     font-size: 20px;
@@ -65,9 +59,7 @@
 }
 
 .login-logo {
-    width: 90px;
-    height: 90px;
-    object-fit: contain;
+    width: 200px;
     margin-bottom: 12px;
 }
 

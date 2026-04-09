@@ -328,7 +328,7 @@
     margin: 6px 0;
 }
 
-/*toggle password*/ 
+/*toggle password*/
 .settings-toggle-btn {
     background: none;
     border: none;
@@ -339,49 +339,49 @@
     margin-top: 4px;
 }
 
-.login-spinner {
-    display: inline-block;
-    width: 18px;
-    height: 18px;
-    border: 3px solid rgba(255, 255, 255, 0.4);
-    border-top-color: #ffffff;
-    border-radius: 50%;
-    animation: spin 0.7s linear infinite;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-
-.login-btn:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-}
-
-.settings-input-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.settings-input-wrapper .settings-modal-input {
+.settings-banner {
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    margin-left: -12.5%;
     width: 100%;
-    padding-right: 40px;
+    max-width: 25%;
+    color: #cc0000;
+    background-color: #fdecea;
+    border: 1px solid #f5c6c6;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 15px;
+    text-align: center;
     box-sizing: border-box;
+    z-index: 1000;
+    opacity: 0;
+    animation: fadeInOut 5s linear forwards;
 }
 
-.settings-eye-btn {
-    position: absolute;
-    right: 12px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    opacity: 0.5;
-}
+@keyframes fadeInOut {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
 
-.settings-eye-btn:hover {
-    opacity: 1;
+    10% {
+        transform: translateY(0);
+        opacity: 0.9;
+
+    }
+
+    /* Fades in quickly */
+    90% {
+        transform: translateY(0);
+        opacity: 0.9;
+    }
+
+    /* Stays visible */
+    100% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    /* Fades out at the end */
 }

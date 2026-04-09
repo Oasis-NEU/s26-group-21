@@ -25,11 +25,9 @@
   gap: 1rem;
 }
 
-.navbar-logo-placeholder {
+.navbar-logo {
   width: 40px;
-  height: 40px;
   border-radius: 6px;
-  background-color: rgba(255, 255, 255, 0.2);
   flex-shrink: 0;
 }
 
