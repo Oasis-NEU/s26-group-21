@@ -46,7 +46,7 @@
 
 .listingCard-imageWrapper {
   position: relative;
-  padding-top: 62%;
+  padding-top: 125%;
   overflow: hidden;
 }
 
@@ -81,6 +81,14 @@
 .listingCard-title {
   font-size: 1rem;
   margin: 0;
+  font-weight: 700;
+}
+
+.listingCard-authors {
+  font-size: 0.90rem;
+  margin: 0;
+  font-weight: 550;
+  color: #374151
 }
 
 .listingCard-description {

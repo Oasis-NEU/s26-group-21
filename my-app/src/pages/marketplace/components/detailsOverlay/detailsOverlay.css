@@ -19,11 +19,12 @@
   background: #ffffff;
   border-radius: 16px;
   width: 90%;
-  max-width: 680px;
+  max-width: 540px;
   max-height: 88vh;
   overflow-y: auto;
   box-shadow: 0 20px 60px rgba(15, 23, 42, 0.25);
   font-family: "Avenir", "Avenir Next", "Nunito", sans-serif;
+  margin-top: 40px;
 }
 
 .detailsOverlay-close {
@@ -53,18 +54,15 @@
 
 .detailsOverlay-imageWrapper {
   width: 100%;
-  padding-top: 45%;
-  position: relative;
+  height: 100%;
   overflow: hidden;
   border-radius: 16px 16px 0 0;
 }
 
 .detailsOverlay-imageWrapper img {
-  position: absolute;
-  inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .detailsOverlay-body {

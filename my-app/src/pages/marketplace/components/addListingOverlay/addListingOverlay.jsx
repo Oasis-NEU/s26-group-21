@@ -3,6 +3,7 @@ import './addListingOverlay.css'
 import { categories } from '../../categories'
 import { supabase } from '../../../../supabase'
 
+
 const EMPTY_FORM = {
   title: '',
   authors: '',
@@ -20,6 +21,7 @@ function AddListingOverlay({ open, onClose, editListing, session, fetchListings 
   const [image, setImage] = useState(null)
   const [dragging, setDragging] = useState(false)
   const [error, setError] = useState("")
+
   const fileInputRef = useRef(null)
 
   useEffect(() => {
@@ -170,17 +172,16 @@ function AddListingOverlay({ open, onClose, editListing, session, fetchListings 
                   onClick={(e) => { e.stopPropagation(); setImage(null) }}
                 >×</button>
               </>
-            )
-              : editListing ? (
-                <>
-                  <img src={editListing.image_url} alt="preview" className="addListingOverlay-preview" />
-                  <button
-                    type="button"
-                    className="addListingOverlay-removeImg"
-                    onClick={(e) => { e.stopPropagation(); setImage(null) }}
-                  >×</button>
-                </>
-              ) : (
+            ) : editListing ? (
+              <>
+                <img src={editListing.image_url} alt="preview" className="addListingOverlay-preview" />
+                <button
+                  type="button"
+                  className="addListingOverlay-removeImg"
+                  onClick={(e) => { e.stopPropagation(); setImage(null) }}
+                >×</button>
+              </>
+            ) : (
                   <div className="addListingOverlay-dropHint">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
                       strokeWidth="0.75" strokeLinecap="round" strokeLinejoin="round">
