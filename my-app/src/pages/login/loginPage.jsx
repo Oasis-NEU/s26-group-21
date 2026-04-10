@@ -111,6 +111,7 @@ export default function LoginPage() {
         setLastName("")
         setPassword("")
         setConfirmPassword("")
+        setShowPassword(false)
     }
 
     return (
@@ -149,21 +150,21 @@ export default function LoginPage() {
                 <form onSubmit={handleSubmit} className="login-form">
                     {/* Renders first and last name entry on sign up form */}
                     {isSignUp && (
-                        <div className="login-input-wrapper">
+                        <div className="login-name-row">
                             <input
-                                type={showPassword ? "text" : "password"}
-                                placeholder="Confirm Password"
-                                value={confirmPassword}
-                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                type="text"
+                                placeholder="First Name"
+                                value={firstName} // Binds input's displayed value to firstName state variable
+                                onChange={(e) => setFirstName(e.target.value)} // Updates state variable on every keystroke
                                 className="login-input"
                             />
-                            <button
-                                type="button"
-                                onClick={() => setShowPassword(!showPassword)}
-                                className="login-eye-btn"
-                            >
-                                <img src={showPassword ? eyeOffIcon : eyeIcon} alt="toggle password" width="18" height="18" />
-                            </button>
+                            <input
+                                type="text"
+                                placeholder="Last Name"
+                                value={lastName} // Binds input's displayed value to lastName state variable
+                                onChange={(e) => setLastName(e.target.value)} // Updates state variable on every keystroke
+                                className="login-input"
+                            />
                         </div>
                     )}
                     {/* Display of sign in */}
