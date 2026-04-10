@@ -10,6 +10,7 @@ function ListingCard({ item, onViewDetails, wants,
       <div className="listingCard-body">
         <span className="listingCard-category">{item.category}</span>
         <h3 className="listingCard-title">{item.title}</h3>
+        <h2 className='listingCard-authors'>{item.authors}</h2>
         <p className="listingCard-description">{item.description}</p>
         <div className="listingCard-meta">
           <span className="listingCard-price">${item.price.toFixed(2)}</span>
